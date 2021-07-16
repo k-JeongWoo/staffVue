@@ -25,13 +25,13 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 28090,
+    port: 18080,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://192.168.100.25:28080',
+        target: 'http://192.168.100.25:18080',
         //target: 'http://sgn-stg.neodreams.co.kr:8080',
         //target: 'http://localhost:8080',
         pathRewrite: { '^/api': '' },

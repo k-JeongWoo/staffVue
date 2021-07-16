@@ -3,12 +3,20 @@ import MainHome from '@/components/main/mainHome'
 import InquiryDetail from '@/components/main/inquiryDetail'
 import PdfView from '@/components/pdfview'
 import PatientDetailCheckup from '@/components/patient/patientDetailCheckup'
+// import Header from '@/components/layout/Header'
+// import Menu from '@/components/layout/LeftMenu'
+// import Footer from '@/components/layout/Footer'
 
 export default [
   {
     path: '/',
     name: 'Index',
-    component: Index
+    components: {
+      // header: Header,
+      default: Index
+      // leftMenu: Menu,
+      // footer: Footer
+    }
   },
   {
     path: '/mainhome',
