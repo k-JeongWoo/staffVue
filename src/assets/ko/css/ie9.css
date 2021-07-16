@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+select{padding:0 0 0 10px !important;background-image:none !important;}
+.inputWrap{display:table;width:100%;table-layout:fixed}
+.inputWrap > *{display:table-cell !important;}
+.inputWrap input{width:95%;}
+[type='file'].inputFile{width:0;}
+.typeTel.inputWrap select,
+.typeMail.inputWrap select{min-width:78px;}
+.typeFile.inputWrap label{width:105px;}
