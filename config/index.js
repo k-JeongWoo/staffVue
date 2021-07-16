@@ -10,6 +10,15 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    proxyTable: {
+      '/api': {
+        target: 'http://192.168.100.25:28080',
+        //target: 'http://sgn-stg.neodreams.co.kr:28080',
+        pathRewrite: { '^/api': '' },
+        changeOrigin: true,
+        source: false
+      }
+    },
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -32,8 +41,7 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: 'http://192.168.100.25:28080',
-        //target: 'http://sgn-stg.neodreams.co.kr:8080',
-        //target: 'http://localhost:8080',
+        //target: 'http://sgn-stg.neodreams.co.kr:28080',
         pathRewrite: { '^/api': '' },
         changeOrigin: true,
         source: false

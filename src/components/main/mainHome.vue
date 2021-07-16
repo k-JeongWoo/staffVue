@@ -40,7 +40,7 @@
             <td>진료 및 처방 내역</td>
           </tr>
           <tr>
-            <td>PDF 조회</td>
+            <td><span v-on:click="popUpPDF">PDF 조회</span></td>
           </tr>
           <tr>
             <td>진료내역 조회</td>
@@ -62,29 +62,29 @@
             <td></td>
             <td></td>
           </tr>
-<!--          <tr>
-            <td rowspan="2">병원 정보 관리</td>
-            <td>의료진/진료실 설정</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>병원 소개 설정</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>내 정보 관리</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>시스템 설정</td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>-->
+          <!--          <tr>
+                      <td rowspan="2">병원 정보 관리</td>
+                      <td>의료진/진료실 설정</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>병원 소개 설정</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>내 정보 관리</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>시스템 설정</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>-->
         </table>
       </div>
     </div>
@@ -95,7 +95,11 @@
 <script>
 export default {
   data () {
-    return {
+    return {}
+  },
+  methods: {
+    popUpPDF: function () {
+      window.open('/pdfviewpopup', '_blank')
     }
   }
 }
