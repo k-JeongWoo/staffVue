@@ -10,13 +10,10 @@
         </h2>
         <table>
           <tr>
-            <td>dept1</td>
-            <td>dept2</td>
-            <td>dept3</td>
-            <td>dept4</td>
+            <td colspan="4"><h3 style="text-align: center">의료진 서비스</h3></td>
           </tr>
           <tr>
-            <td>Home</td>
+            <td>당일 예약 리스트</td>
             <td></td>
             <td></td>
             <td></td>
@@ -28,36 +25,44 @@
             <td></td>
           </tr>
           <tr>
+          </tr>
+          <tr>
             <td rowspan="6">환자 리스트</td>
-            <td>환자 리스트</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td rowspan="5">환자 정보 상세</td>
-            <td>진료내역</td>
+            <td rowspan="6">환자 정보 상세</td>
+            <td>기능별 건강 데이터 조회</td>
             <td></td>
           </tr>
           <tr>
-            <td rowspan="3">검진/검사 결과</td>
-            <td>본원 검진 내역</td>
+            <td rowspan="3">기본 검진  데이터 조회</td>
+            <td><router-link to="/patient/patientDetailCheckup" class="btn_border_snsLog sm"><a href="">검진 결과</a></router-link></td>
           </tr>
           <tr>
             <td>진료 및 처방 내역</td>
           </tr>
           <tr>
-            <td><router-link to="/patient/patientDetailCheckup" class="btn_border_snsLog sm"><a href="">[건강보험 관리 공단] 검진 결과</a></router-link></td>
+            <td>PDF 조회</td>
           </tr>
           <tr>
-            <td>환자 문의사항</td>
+            <td>진료내역 조회</td>
             <td></td>
           </tr>
           <tr>
-            <td>기본 정보 설정</td>
+            <td>상담내역 조회</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>마이 페이지</td>
+            <td>내 정보 조회</td>
             <td></td>
             <td></td>
           </tr>
           <tr>
+            <td>병원 정보 관리</td>
+            <td>병원 정보 조회</td>
+            <td></td>
+            <td></td>
+          </tr>
+<!--          <tr>
             <td rowspan="2">병원 정보 관리</td>
             <td>의료진/진료실 설정</td>
             <td></td>
@@ -79,7 +84,7 @@
             <td></td>
             <td></td>
             <td></td>
-          </tr>
+          </tr>-->
         </table>
       </div>
     </div>
