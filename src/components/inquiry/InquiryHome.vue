@@ -1,47 +1,52 @@
 <template>
-  <!--  container  -->
-  <div class="container agreement01">
-    <!--contents-->
-    <div class="contents">
-      <div class="agreement_box">
-        <h2 class="title_purple tac">
-          상담요청리스트
-        </h2>
-        <ul v-for="(item, index) in inquiryList">
-          <hr />
-          <li>title : {{item.medicalInquiryTitle}}</li>
-          <li>Desc : {{item.medicalInquiryTitle}}</li>
-          <li>regMemName : {{item.memberName}}</li>
-          <li>regDate : {{item.regDate}}</li>
-          <li>answerCheck : {{item.answerCheck === 'N' ? '미답변' : '답변'}}</li>
+  <div class="innerWrap gray ">
+    <!-- contents -->
+    <div class="top_wrap">
+      <!--  container  -->
+      <div class="container agreement01">
+        <!--contents-->
+        <div class="contents">
+          <div class="agreement_box">
+            <h2 class="title_purple tac">
+              상담요청리스트
+            </h2>
+            <ul v-for="(item, index) in inquiryList">
+              <hr />
+              <li>title : {{item.medicalInquiryTitle}}</li>
+              <li>Desc : {{item.medicalInquiryTitle}}</li>
+              <li>regMemName : {{item.memberName}}</li>
+              <li>regDate : {{item.regDate}}</li>
+              <li>answerCheck : {{item.answerCheck === 'N' ? '미답변' : '답변'}}</li>
+            </ul>
+          </div>
+        </div>
+        <ul class="pagination">
+          <!-- 이전 -->
+          <li class="paginate_button previous" :class="isFirstOrLast(pageInfo.first)" id="noticeList_previous">
+            <a href="javascript:;">Previous</a>
+          </li>
+          <!-- 첫 페이지 -->
+          <li class="paginate_button" :class="(1 == (pageInfo.pageNo+1))? 'active' : ''">
+            <a href="javascript:;" @click="movePage(1)">1</a>
+          </li>
+          <!-- ... -->
+          <li class="paginate_button disabled" v-if="pageInfo.pageNo > 3">
+            <a href="javascript:;">...</a>
+          </li>
+          <!-- 반복되는 페이지 -->
+          <li class="paginate_button" :class="(n == (pageInfo.pageNo+1))? 'active' : ''" v-for="n in (pageInfo.totalPages-1)" v-if="showPagingButton(n)">
+            <a href="javascript:;" @click="movePage(n)">{{ n }}</a>
+          </li>
+          <li class="paginate_button disabled" v-if="pageInfo.pageNo < pageInfo.totalPages - 4"> <a href="javascript:;">...</a>
+          </li> <!-- 마지막 페이지 --> <li class="paginate_button" :class="(pageInfo.totalPages == (pageInfo.pageNo+1))? 'active' : ''">
+          <a href="javascript:;" @click="movePage(pageInfo.totalPages)">{{ pageInfo.totalPages }}</a>
+        </li> <!-- 다음 --> <li class="paginate_button next" :class="isFirstOrLast(pageInfo.last)" id="noticeList_next">
+          <a href="javascript:;">Next</a>
+        </li>
         </ul>
+        <!--//contents-->
       </div>
     </div>
-    <ul class="pagination">
-      <!-- 이전 -->
-      <li class="paginate_button previous" :class="isFirstOrLast(pageInfo.first)" id="noticeList_previous">
-        <a href="javascript:;">Previous</a>
-      </li>
-      <!-- 첫 페이지 -->
-      <li class="paginate_button" :class="(1 == (pageInfo.pageNo+1))? 'active' : ''">
-        <a href="javascript:;" @click="movePage(1)">1</a>
-      </li>
-      <!-- ... -->
-      <li class="paginate_button disabled" v-if="pageInfo.pageNo > 3">
-        <a href="javascript:;">...</a>
-      </li>
-      <!-- 반복되는 페이지 -->
-      <li class="paginate_button" :class="(n == (pageInfo.pageNo+1))? 'active' : ''" v-for="n in (pageInfo.totalPages-1)" v-if="showPagingButton(n)">
-        <a href="javascript:;" @click="movePage(n)">{{ n }}</a>
-      </li>
-      <li class="paginate_button disabled" v-if="pageInfo.pageNo < pageInfo.totalPages - 4"> <a href="javascript:;">...</a>
-      </li> <!-- 마지막 페이지 --> <li class="paginate_button" :class="(pageInfo.totalPages == (pageInfo.pageNo+1))? 'active' : ''">
-      <a href="javascript:;" @click="movePage(pageInfo.totalPages)">{{ pageInfo.totalPages }}</a>
-    </li> <!-- 다음 --> <li class="paginate_button next" :class="isFirstOrLast(pageInfo.last)" id="noticeList_next">
-      <a href="javascript:;">Next</a>
-    </li>
-    </ul>
-    <!--//contents-->
   </div>
 </template>
 
