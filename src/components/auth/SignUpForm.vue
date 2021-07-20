@@ -9,73 +9,73 @@
     <!--contents-->
     <div class="contents">
       <ul class="infoInput_list mb7">
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">아이디<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled style과 터치가 안되도록 css속성넣음. -->
+        <li>
+          <p>아이디<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled style과 터치가 안되도록 css속성넣음. -->
             <input type="text" v-model="usr_id" name="" value="홍길동" v-on:change="emailChkFlag = false">
             <button v-on:click="usrIdCheck">중복확인</button>
             <br />* 이메일 주소로
           </p>
         </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">비밀번호<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled-->
+        <li>
+          <p>비밀번호<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled-->
             <input type="password" v-model="usr_password" name="" value="" >
             <br /> 암호화 필요
           </p>
         </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">비밀번호 확인<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled-->
+        <li>
+          <p>비밀번호 확인<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled-->
             <input type="password" v-model="usr_password_chk" name="" value="" >
           </p>
         </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">이름<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled style과 터치가 안되도록 css속성넣음. -->
+        <li>
+          <p>이름<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled style과 터치가 안되도록 css속성넣음. -->
             <input type="text" v-model="usr_name" name="" value="홍길동" >
           </p>
         </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">핸드폰 번호<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled-->
+        <li>
+          <p>핸드폰 번호<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled-->
             <input type="text" v-model="usr_telnum" name="" value="010-1234-5678" >
             <button v-on:click="nicePopUp">인증하기</button>
           </p>
         </li>
         <ul class="infoInput_list">
           <li class="inputBox mb3">
-            <p class="input_tit">주소 (선택)</p>
+            <p>주소 (선택)</p>
           </li>
-          <li class="inputBox centerFlex mb3 address">
-            <p class="input "><!--수정불가 :: disabled-->
+          <li>
+            <p><!--수정불가 :: disabled-->
               <input type="text" v-model="usr_zipcode" name="" placeholder="우편번호" disabled>
             </p>
-            <button type="button" @click="showApi" class="btn_border sm ">검 색</button>
+            <button type="button" @click="showApi" class="btn_border ">검 색</button>
           </li>
-          <li class="inputBox centerFlex mb3">
-            <p class="input">
+          <li>
+            <p>
               <input type="text" v-model="usr_address" name="" placeholder="상세주소">
             </p>
           </li>
-          <li class="inputBox centerFlex mb3">
-            <p class="input">
+          <li>
+            <p>
               <input type="text" v-model="usr_address_detail" name="" placeholder="상세주소">
             </p>
           </li>
           <div ref="embed"></div>
         </ul>
-        <li class="inputBox centerFlex mb7">
-          <p class="input_tit">병원명<span class="required">*</span></p>
-          <p class="input disabled"><!--수정불가 :: disabled-->
+        <li>
+          <p>병원명<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled-->
             <select v-model="hospitalId">
               <option value="">-선택-</option>
               <option v-for="item in hospitalAllList" v-bind:value="item.hospitalId">{{item.pdYadmNm}}</option>
             </select>
           </p>
         </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">직책<span class="required">*</span></p>
+        <li>
+          <p>직책<span class="required">*</span></p>
           <p class="radioBox">
             <span class="inputRadio typeA "><!--수정불가 :: disabled-->
               <input type="radio" name="position" id="position00" v-model="usr_position" value="D" >
@@ -103,9 +103,9 @@
             </span>
           </p>
         </li>
-        <li class="inputBox centerFlex mb7">
-          <p class="input_tit">진료과목<span class="required">*</span></p>
-          <p class="input disabled"><!--수정불가 :: disabled-->
+        <li>
+          <p>진료과목<span class="required">*</span></p>
+          <p><!--수정불가 :: disabled-->
             <select v-model="medical_program" :disabled="usr_position !== 'D'">
               <option value="">-선택-</option>
               <option v-for="item in clinicList" v-bind:value="item.clinicCode">{{item.clinicName}}</option>
@@ -116,7 +116,7 @@
     </div>
     <!--//contents-->
     <!-- footer -->
-    <div class="footer typeB">
+    <div class="footer typeB" style="margin-left: 20px;">
       <div class="btnArea">
         <button class="btn_fill"
                 @click="regUsrInfo">가입 승인 요청
@@ -286,4 +286,6 @@ function validateEmail (emailTxt) {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+.contents {margin-left: 20px; margin-top: 15px;}
+li {margin-bottom: 20px;}
 </style>

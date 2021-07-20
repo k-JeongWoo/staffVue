@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       pdfSrc: {},
-      currentPage: 0,
+      currentPage: 1,
       pageCount: 0,
       numPages: undefined
     }

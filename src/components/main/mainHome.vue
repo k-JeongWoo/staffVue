@@ -19,7 +19,7 @@
             <td></td>
           </tr>
           <tr>
-            <td><router-link to="/inquiry/inquiryHome" class="btn_border_snsLog sm"><a href="">상담요청 리스트</a></router-link></td>
+            <td><router-link to="/inquiry/inquiryHome"><a href="">상담요청 리스트</a></router-link></td>
             <td></td>
             <td></td>
             <td></td>
@@ -34,13 +34,13 @@
           </tr>
           <tr>
             <td rowspan="3">기본 검진  데이터 조회</td>
-            <td><router-link to="/patient/patientDetailCheckup" class="btn_border_snsLog sm"><a href="">검진 결과</a></router-link></td>
+            <td><router-link to="/patient/patientDetailCheckup"><a href="">검진 결과</a></router-link></td>
           </tr>
           <tr>
             <td>진료 및 처방 내역</td>
           </tr>
           <tr>
-            <td><span v-on:click="popUpPDF">PDF 조회</span></td>
+            <td><span v-on:click="popUpPDF"><a href="">PDF 조회</a></span></td>
           </tr>
           <tr>
             <td>진료내역 조회</td>
@@ -62,29 +62,6 @@
             <td></td>
             <td></td>
           </tr>
-          <!--          <tr>
-                      <td rowspan="2">병원 정보 관리</td>
-                      <td>의료진/진료실 설정</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>병원 소개 설정</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>내 정보 관리</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>시스템 설정</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>-->
         </table>
       </div>
     </div>
@@ -99,7 +76,7 @@ export default {
   },
   methods: {
     popUpPDF: function () {
-      window.open('/pdfviewpopup', '_blank')
+      window.open('http://sgn-stg.neodreams.co.kr:90/pdfviewpopup', '_blank')
     }
   }
 }
@@ -110,9 +87,13 @@ export default {
 table {
   width: 100%;
   border: 1px solid #444444;
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 th, td {
   border: 1px solid #444444;
+  padding: 10px;
+}
+a {
+  color: #0a4fa1;
 }
 </style>

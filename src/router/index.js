@@ -5,7 +5,7 @@ import auth from '@/router/auth'
 import inquiry from '@/router/inquiry'
 
 Vue.use(Router)
-console.log(process.env)
+
 const routes = [
   ...main,
   ...auth,

@@ -10,6 +10,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    publicPath: '/mainhome',
     proxyTable: {
       '/api': {
         target: 'http://192.168.100.25:28080',
@@ -38,6 +39,7 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    publicPath: '/mainhome',
     proxyTable: {
       '/api': {
         target: 'http://192.168.100.25:28080',

@@ -10,43 +10,60 @@
             <h2 class="title_purple tac">
               상담요청리스트
             </h2>
-            <ul v-for="(item, index) in inquiryList">
-              <hr />
+            <ul style="margin:20px 0px 20px" v-for="(item, index) in inquiryList">
+              <li><button style="margin-left:20px;" v-on:click="getInquiryDetail(item.medicalInquiryId)">상세보기</button></li>
               <li>title : {{item.medicalInquiryTitle}}</li>
               <li>Desc : {{item.medicalInquiryTitle}}</li>
               <li>regMemName : {{item.memberName}}</li>
               <li>regDate : {{item.regDate}}</li>
               <li>answerCheck : {{item.answerCheck === 'N' ? '미답변' : '답변'}}</li>
             </ul>
+
+            <ul class="pagination">
+              <!-- 이전 -->
+              <li class="paginate_button previous" :class="isFirstOrLast(pageInfo.first)" id="noticeList_previous">
+                <a href="javascript:;">Previous</a>
+              </li>
+              <!-- 첫 페이지 -->
+              <li class="paginate_button" :class="(1 == (pageInfo.pageNo+1))? 'active' : ''">
+                <a href="javascript:;" @click="movePage(1)">1</a>
+              </li>
+              <!-- ... -->
+              <li class="paginate_button disabled" v-if="pageInfo.pageNo > 3">
+                <a href="javascript:;">...</a>
+              </li>
+              <!-- 반복되는 페이지 -->
+              <li class="paginate_button" :class="(n == (pageInfo.pageNo+1))? 'active' : ''" v-for="n in (pageInfo.totalPages-1)" v-if="showPagingButton(n)">
+                <a href="javascript:;" @click="movePage(n)">{{ n }}</a>
+              </li>
+              <li class="paginate_button disabled" v-if="pageInfo.pageNo < pageInfo.totalPages - 4"> <a href="javascript:;">...</a>
+              </li> <!-- 마지막 페이지 --> <li class="paginate_button" :class="(pageInfo.totalPages == (pageInfo.pageNo+1))? 'active' : ''">
+              <a href="javascript:;" @click="movePage(pageInfo.totalPages)">{{ pageInfo.totalPages }}</a>
+            </li> <!-- 다음 --> <li class="paginate_button next" :class="isFirstOrLast(pageInfo.last)" id="noticeList_next">
+              <a href="javascript:;">Next</a>
+            </li>
+            </ul>
+          </div>
+          <div class="agreement_box" style="border-left: 1px #2c3e50">
+            <h2 class="title_purple tac">
+              상담요청상세
+            </h2>
+            <ul style="margin:20px 0px 20px" v-if="inquiryDetail !== null">
+              <li>성명 : {{inquiryDetail.memberName}}</li>
+              <li>생년월일 : {{inquiryDetail.memberBirth}}</li>
+              <li>성별 : {{inquiryDetail.gender === "M" ? "남" : "여"}}</li>
+              <li>연락처 : {{inquiryDetail.memberHpno}}</li>
+              <li>visitDate : {{inquiryDetail.visitDate}}</li>
+              <li>Programs : {{inquiryDetail.attentionPrograms}}</li>
+              <br/>
+              <li>제목 : {{inquiryDetail.medicalInquiryTitle}}</li>
+              <li>내용 : {{inquiryDetail.medicalInquiryDesc}}</li>
+              <li>등록일 : {{inquiryDetail.regDate}}</li>
+            </ul>
           </div>
         </div>
-        <ul class="pagination">
-          <!-- 이전 -->
-          <li class="paginate_button previous" :class="isFirstOrLast(pageInfo.first)" id="noticeList_previous">
-            <a href="javascript:;">Previous</a>
-          </li>
-          <!-- 첫 페이지 -->
-          <li class="paginate_button" :class="(1 == (pageInfo.pageNo+1))? 'active' : ''">
-            <a href="javascript:;" @click="movePage(1)">1</a>
-          </li>
-          <!-- ... -->
-          <li class="paginate_button disabled" v-if="pageInfo.pageNo > 3">
-            <a href="javascript:;">...</a>
-          </li>
-          <!-- 반복되는 페이지 -->
-          <li class="paginate_button" :class="(n == (pageInfo.pageNo+1))? 'active' : ''" v-for="n in (pageInfo.totalPages-1)" v-if="showPagingButton(n)">
-            <a href="javascript:;" @click="movePage(n)">{{ n }}</a>
-          </li>
-          <li class="paginate_button disabled" v-if="pageInfo.pageNo < pageInfo.totalPages - 4"> <a href="javascript:;">...</a>
-          </li> <!-- 마지막 페이지 --> <li class="paginate_button" :class="(pageInfo.totalPages == (pageInfo.pageNo+1))? 'active' : ''">
-          <a href="javascript:;" @click="movePage(pageInfo.totalPages)">{{ pageInfo.totalPages }}</a>
-        </li> <!-- 다음 --> <li class="paginate_button next" :class="isFirstOrLast(pageInfo.last)" id="noticeList_next">
-          <a href="javascript:;">Next</a>
-        </li>
-        </ul>
-        <!--//contents-->
       </div>
-    </div>
+   </div>
   </div>
 </template>
 
@@ -57,11 +74,12 @@ export default {
   data () {
     return {
       inquiryList: null,
+      inquiryDetail: null,
       // 페이지정보
       pageInfo: {
         first: 1,
         pageNo: 0,
-        perPageCnt: 2,
+        perPageCnt: 4,
         last: 1,
         totalPages: 1
       }
@@ -88,6 +106,17 @@ export default {
       var cond5 = (thisPage < (totalPage - 4)) && (n > (thisPage + 1)) && (n > 5)
       if (cond1 || cond2 || cond3 || cond4 || cond5) return false
       return true
+    },
+    getInquiryDetail: function (idx) {
+      console.log(idx)
+      var params = {
+        medicalInquiryId: idx
+      }
+      var res = axios.get(`/api/v1/api/medicalInquery/medicalInqueryHospitalDetail`, { params: params })
+      res.then(response => {
+        this.inquiryDetail = response.data.data
+        console.log(this.inquiryDetail)
+      }).catch(function (error) { console.log(error) })
     },
     isFirstOrLast: function (boolean) {
       return boolean ? 'disabled' : ''
