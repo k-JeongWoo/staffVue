@@ -18,17 +18,21 @@ Vue.use(VueCookie)
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  axios.get('/api/v1/api/emplystaff/emplystaffInfo')
-    .then(function (response) {
-      if (response.data.resultCode === 'error') {
-        next('/login')
-      } else {
-        next()
-      }
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+  if (to.path === '/' || to.path === '/mainhome' || to.path === '/login') {
+    next()
+  } else {
+    axios.get('/api/v1/api/emplystaff/emplystaffInfo')
+      .then(function (response) {
+        if (response.data.resultCode === 'error') {
+          next('/login')
+        } else {
+          next()
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
 })
 
 /* eslint-disable no-new */

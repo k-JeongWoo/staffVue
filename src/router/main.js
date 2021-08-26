@@ -2,10 +2,7 @@ import Index from '@/components/Index'
 import MainHome from '@/components/main/mainHome'
 import InquiryDetail from '@/components/main/inquiryDetail'
 import PdfView from '@/components/pdfview'
-import PatientDetailCheckup from '@/components/patient/patientDetailCheckup'
 import Asid from '@/components/layout/Asid'
-// import Menu from '@/components/layout/LeftMenu'
-// import Footer from '@/components/layout/Footer'
 import axios from 'axios'
 
 export default [
@@ -23,10 +20,7 @@ export default [
     path: '/login',
     name: 'Login',
     components: {
-      // header: Header,
       default: Index
-      // leftMenu: Menu,
-      // footer: Footer
     }
   },
   {
@@ -35,8 +29,6 @@ export default [
     components: {
       asid: Asid,
       default: MainHome
-      // leftMenu: Menu,
-      // footer: Footer
     },
     children: [
       {
@@ -70,10 +62,5 @@ export default [
     path: '/pdfviewpopup',
     name: 'pdfview',
     component: PdfView
-  },
-  {
-    path: '/patient/patientDetailCheckup',
-    name: 'patientDetailCheckup',
-    component: PatientDetailCheckup
   }
 ]

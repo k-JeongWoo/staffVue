@@ -85,7 +85,6 @@ export default {
   methods: {
     loginAccess: function () {
       let obj = this
-      console.log(CryptoJS.AES.encrypt(this.usr_password, 'neoPriEncrypt!!!').toString())
       if (this.usr_id !== '' && this.usr_password !== '') {
         axios.post(`/api/v1/api/auth/login`,
           {
