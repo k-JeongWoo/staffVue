@@ -3,7 +3,7 @@ import MainHome from '@/components/main/mainHome'
 import InquiryDetail from '@/components/main/inquiryDetail'
 import PdfView from '@/components/pdfview'
 import PatientDetailCheckup from '@/components/patient/patientDetailCheckup'
-// import Header from '@/components/layout/Header'
+import Asid from '@/components/layout/Asid'
 // import Menu from '@/components/layout/LeftMenu'
 // import Footer from '@/components/layout/Footer'
 import axios from 'axios'
@@ -32,7 +32,12 @@ export default [
   {
     path: '/mainhome',
     name: 'MainHome',
-    component: MainHome,
+    components: {
+      asid: Asid,
+      default: MainHome
+      // leftMenu: Menu,
+      // footer: Footer
+    },
     children: [
       {
         path: '',
@@ -50,24 +55,13 @@ export default [
         .then(function (response) {
           console.log(response)
           if (response.data.resultCode === 'error') {
-            // sessionStorage.clear()
-            /* sessionStorage.setItem('usr_name', '게스트') */
             next('/login')
           } else {
-            /*
-            console.log('Add Session Storage ! - User Name = ' + response.data.data.name)
-            sessionStorage.setItem('usr_name', response.data.data.name)
-            sessionStorage.setItem('usr_mail', response.data.data.mail)
-            sessionStorage.setItem('usr_tel', response.data.data.tel)
-            sessionStorage.setItem('usr_age', response.data.data.age)
-            */
             next()
           }
         })
         .catch(function (error) {
           console.log(error)
-          // next('/')
-          // 서비스 블랭크 페이지로
         })
     },
     props: true

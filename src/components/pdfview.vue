@@ -1,5 +1,5 @@
 <template>
-  <div class="container login01 noBg">
+  <div class="container login01 noBg" style="width: 100%">
     {{currentPage}} / {{pageCount}}
     <button v-on:click="currentPage++">+</button>
     <button v-on:click="currentPage--">-</button>
@@ -32,9 +32,10 @@ export default {
   },
   beforeCreate () {
     var params = {
-      checkupDocId: 4,
-      memberId: 3
+      checkupMasterId: this.$route.query.checkupMasterId,
+      memberId: this.$route.query.memberId
     }
+    console.log(params)
     var res = axios.get(`/api/v1/api/checkupDetail/checkupDocument`, { params: params })
     res.then(response => {
       console.log(response)

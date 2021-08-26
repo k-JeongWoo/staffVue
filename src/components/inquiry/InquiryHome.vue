@@ -33,15 +33,22 @@
                 <a href="javascript:;">...</a>
               </li>
               <!-- 반복되는 페이지 -->
-              <li class="paginate_button" :class="(n == (pageInfo.pageNo+1))? 'active' : ''" v-for="n in (pageInfo.totalPages-1)" v-if="showPagingButton(n)">
+              <li class="paginate_button" :class="(n == (pageInfo.pageNo+1))? 'active' : ''"
+                  v-for="n in (pageInfo.totalPages-1)"
+                  v-if="showPagingButton(n)">
                 <a href="javascript:;" @click="movePage(n)">{{ n }}</a>
               </li>
-              <li class="paginate_button disabled" v-if="pageInfo.pageNo < pageInfo.totalPages - 4"> <a href="javascript:;">...</a>
-              </li> <!-- 마지막 페이지 --> <li class="paginate_button" :class="(pageInfo.totalPages == (pageInfo.pageNo+1))? 'active' : ''">
-              <a href="javascript:;" @click="movePage(pageInfo.totalPages)">{{ pageInfo.totalPages }}</a>
-            </li> <!-- 다음 --> <li class="paginate_button next" :class="isFirstOrLast(pageInfo.last)" id="noticeList_next">
-              <a href="javascript:;">Next</a>
-            </li>
+              <li class="paginate_button disabled" v-if="pageInfo.pageNo < pageInfo.totalPages - 4">
+                <a href="javascript:;">...</a>
+              </li>
+              <!-- 마지막 페이지 -->
+              <li class="paginate_button" :class="(pageInfo.totalPages == (pageInfo.pageNo+1))? 'active' : ''">
+                <a href="javascript:;" @click="movePage(pageInfo.totalPages)">{{ pageInfo.totalPages }}</a>
+              </li>
+              <!-- 다음 -->
+              <li class="paginate_button next" :class="isFirstOrLast(pageInfo.last)" id="noticeList_next">
+                <a href="javascript:;">Next</a>
+              </li>
             </ul>
           </div>
           <div class="agreement_box" style="border-left: 1px #2c3e50">

@@ -1,4 +1,4 @@
-<template>
+npm <template>
   <div class="asid_menu open"><!-- open 추가시 열린 어사이드 -->
     <div class="asid">
       <h1>씨젠로고</h1>
