@@ -6,7 +6,7 @@
     <div class="login_wrap">
       <div class="login_cont">
         <h2 class="headline04 color0">Log in.</h2>
-        <p class="cont_txt01 color1 mt6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum turpis ullamcorper neque metus, sed.</p>
+        <p class="cont_txt01 color1 mt6">로그인 정보를 입력해주세요</p>
         <!---->
         <form >
           <div class="login_box mt8">
@@ -31,7 +31,7 @@
             -->
           </div>
           <div class="btnWrap">
-            <button type="button" class="btn_fill" :class="(usr_id !== '' && usr_password !== '') ? '' : 'disabled'" v-on:click="loginAccess">Enabled</button><!-- disabled 클래스 제거시 기본 진한보라버튼 -->
+            <button type="button" class="btn_fill" :class="(usr_id !== '' && usr_password !== '') ? '' : 'disabled'" v-on:click="loginAccess">로그인</button><!-- disabled 클래스 제거시 기본 진한보라버튼 -->
           </div>
         </form>
         <ul class="idPw_search mt7">
@@ -42,7 +42,7 @@
             <a href="" class="btn_text colorA" style="border-right: 1px solid #6666CC;">비밀번호 찾기</a>
           </li>-->
           <li>
-            <router-link :to="{path: '/auth/signUpForm'}"><a href="" class="btn_text colorA">회원가입</a></router-link>
+            <router-link :to="{path: '/auth/signUpForm'}" class="btn_text colorA">회원가입</router-link>
           </li>
         </ul>
         <!--
@@ -59,8 +59,10 @@
       </div>
       <!--//login_cont-->
       <div class="login_bgBox">
-        <h2>lorem ipsum</h2>
-        <p>lorem ipsum dolor sit amet</p>
+<!--        <h2>질병을 예방하도록 의사와 함께하는 안전한 서비스 </h2>
+        <p>환자는 일상 생활에서 의료진의 코치를 받으며 사전에 건강을 관리할 수 있고<br>
+          병원은 환자의 건강정보를 관리하여 치료 중심진료에서 예방진료로 발전할 수 있습니다.
+        </p>-->
       </div>
     </div>
     <!-- //login_wrap -->
@@ -71,7 +73,7 @@
 
 <script>
 import axios from 'axios'
-import CryptoJS from 'crypto-js/crypto-js'
+import CryptoJS from 'crypto-js/aes.js'
 
 export default {
   data () {
@@ -89,18 +91,18 @@ export default {
         axios.post(`/api/v1/api/auth/login`,
           {
             username: this.usr_id,
-            password: CryptoJS.AES.encrypt(this.usr_password, 'neoPriEncrypt!!!').toString(),
+            password: CryptoJS.encrypt(this.usr_password, 'neoPriEncrypt!!!').toString(),
             autoLogin: this.autoLogin
           },
           {withCredentials: true}
         ).then(function (response) {
           if (response.data.resultCode === 'approval') {
-            alert(response.data.resultMsg)
+            alert(response.data.message)
           } else if (response.data.resultCode === 'error') {
-            /* alert('아이디 또는 비밀번호가 틀렸습니다.') */
+            alert('아이디 또는 비밀번호가 틀렸습니다.')
             obj.loginCheck = false
           } else {
-            alert('정상 로그인')
+            /* alert('정상 로그인') */
             obj.$router.push({
               path: '/mainhome'
             })

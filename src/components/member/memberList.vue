@@ -6,12 +6,12 @@
       <!--bxSrchArea-->
       <div class="bxSrchArea fr">
 				<span class="input search_white">
-					<input type="text" placeholder="환자 검색">
+					<input type="text" placeholder="환자 검색" v-model="searchName" v-on:keyup.enter="searchMemberList(this)">
 				</span>
         <div class="filter_box "><!-- on 클래스 추가시 .filter_list 보여짐 -->
-          <button type="button" class="btn_ico">
+<!--          <button type="button" class="btn_ico">
             <i class="ico_filter_purple"></i>
-          </button>
+          </button>-->
           <div class="filter_list">
             <button type="button" class="close">
               <i class="ico_close_purple_x"></i>
@@ -55,7 +55,7 @@
         <div class="listPager_area">
           <div class="fixed-table-container">
             <div class="fixed-table-header-bg"></div>
-            <div class="fixed-table-wrapper table_list scrollArea">
+            <div class="fixed-table-wrapper table_list scrollArea" ref="memList">
               <table class="fixed-table">
                 <colgroup>
                   <col style="width:48px;">
@@ -81,16 +81,16 @@
                   </th>
                   <th style="width:5.8%"><div class="th-text">이름</div></th>
                   <th style="width:7.3%"><div class="th-text">생년월일</div></th>
-                  <th style="width:4.2%"><div class="th-text">성별</div></th>
+                  <th style="width:4.9%"><div class="th-text">성별</div></th>
                   <th style="width:9.4%"><div class="th-text">연락처</div></th>
                   <th style="width:7.6%"><div class="th-text">방문일</div></th>
-                  <th style="width:30%"><div class="th-text">진료기록</div></th>
-                  <th style="width:30%"><div class="th-text">주의사항</div></th>
+                  <th style="width:32.5%"><div class="th-text">진료기록</div></th>
+                  <th style="width:32.5%"><div class="th-text">주의사항</div></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(item, index) in memberList" @click="goMemberDetail(item.memberId)">
-                  <td style="">
+                  <td onclick="event.cancelBubble=true;">
 											<span class="inputCheck typeA ">
 												<input type="checkbox" :id="'list_item'+index" name="list_item" v-model="selected" v-bind:value="item.memberId">
 												<label :for="'list_item' + index">
@@ -143,8 +143,10 @@
               <button type="button" class="btn_float" @click="memberWriteFormToggle">
                 <span class="txt"><i class="ico_bigAdd"></i>신규 환자 등록</span>
               </button>
-              <a href="" class="btn_border"><i class="ico_write_purple"></i>New message</a>
-              <a href="" class="btn_border"><i class="ico_del_purple"></i>Delete</a>
+            </p>
+            <p class="fr" v-if="selected.length > 0" style="margin-right: 20px;">
+              <a href="javascript:alert('준비중 입니다.');" class="btn_border"><i class="ico_write_purple"></i>New message</a>
+              <a href="javascript:alert('준비중 입니다.');" class="btn_border"><i class="ico_del_purple"></i>Delete</a>
             </p>
           </div>
           <!-- //tableList_pager -->
@@ -279,6 +281,7 @@ export default {
     return {
       memberList: null,
       selected: [],
+      searchName: '',
       allCheck: false,
       // 페이지정보
       pageInfo: {
@@ -349,14 +352,13 @@ export default {
         this.checkHpno = false
         this.memberWriteForm.memberBirth = ''.concat(this.memberWriteForm.selYear.toString(), this.memberWriteForm.selMonth.toString(), this.memberWriteForm.selDay.toString())
         this.memberWriteForm.memberHpno = ''.concat('010', this.midHpno.toString(), this.lastHpno.toString())
-        console.log(this.memberWriteForm.memberBirth)
-        console.log(this.memberWriteForm.memberHpno)
         var res = axios.post(`/api/v1/api/member/memberWrite`, this.memberWriteForm)
         res.then(response => {
-          console.log(response)
           if (response.data.resultCode === '0000') {
             alert('등록이 완료되었습니다.')
             getMemberList(this)
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) {
           console.log(error)
@@ -380,6 +382,10 @@ export default {
         memberName: '',
         patientDesc: ''
       }
+    },
+    searchMemberList: function () {
+      this.pageInfo.pageNo = 1
+      getMemberList(this)
     }
   },
   created () {
@@ -398,19 +404,25 @@ export default {
 function getMemberList (obj) {
   obj.pageInfo.pageNo = obj.pageInfo.pageNo === 0 ? 1 : obj.pageInfo.pageNo
   var params = {
+    searchName: obj.searchName,
     pageNo: obj.pageInfo.pageNo,
     perPageCnt: obj.pageInfo.perPageCnt
   }
   var res = axios.get(`/api/v1/api/member/memberList`, { params: params })
   res.then(response => {
-    obj.memberList = response.data.data.content
-    obj.pageInfo.totalPages = response.data.data.totalPages
-    obj.pageInfo.last = response.data.data.totalPages
-    // 페이징 배열 생성
-    obj.pageInfo.pages = []
-    let pageCnt = Math.ceil(response.data.data.totalElements / obj.pageInfo.perPageCnt)
-    for (let index = 1; index <= pageCnt; index++) {
-      obj.pageInfo.pages.push(index)
+    if (response.data.resultCode === '0000') {
+      obj.memberList = response.data.data.content
+      obj.pageInfo.totalPages = response.data.data.totalPages
+      obj.pageInfo.last = response.data.data.totalPages
+      obj.$refs.memList.scrollTop = 0
+      // 페이징 배열 생성
+      obj.pageInfo.pages = []
+      let pageCnt = Math.ceil(response.data.data.totalElements / obj.pageInfo.perPageCnt)
+      for (let index = 1; index <= pageCnt; index++) {
+        obj.pageInfo.pages.push(index)
+      }
+    } else {
+      alert(response.data.message)
     }
   }).catch(function (error) { console.log(error) })
 }

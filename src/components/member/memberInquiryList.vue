@@ -2,7 +2,7 @@
   <div class="innerWrap patient_info_questions">
     <div class="top_wrap">
       <h2 class="headline05 fl">
-        <a href="javascript:void(0)" @click="$router.go(-1)"><i class="ico_backKey"></i>환자  상세 정보</a>
+        <i class="ico_backKey"></i>환자 상세 정보
       </h2>
       <!--bxSrchArea //bxSrchArea-->
     </div>
@@ -30,23 +30,20 @@
                     <span class="tit">연락처</span>
                     <span class="cont">{{phoneFomatter(memberInfo.memberHpno)}}</span>
                   </li>
-                  <li>
+<!--                  <li>
                     <p class="tit">키 / 몸무게</p>
                     <p class="cont">170 cm / 65 kg</p>
                   </li>
                   <li class="w100">
                     <span class="tit">가족력</span>
                     <span class="cont">가족력 텍스트 영역입니다.</span>
-                  </li>
+                  </li>-->
                 </ul>
               </dd>
             </dl>
             <div class="acco_box caution">
               <div class="acco_tit on"> <!-- class="on" 추가시 .acco_box display:block 처리 -->
                 <p>주의사항</p>
-                <button type="button" class="btn_ico acco_btn">
-                  <i class="icoarrows_down02">열기</i>
-                </button>
               </div>
               <div class="acco_cont">
                 <p>{{memberInfo.patientDesc}}</p>
@@ -99,11 +96,11 @@
                       <p class="filterCon_tit">검색 필터</p>
                       <div class="filterCon_list ">
                         <p class="inputCheck typeA">
-                          <input type="checkbox" id="FC1_01" name="filter_check01" v-model="seachhAnswerA">
+                          <input type="checkbox" id="FC1_01" name="filter_check01" v-model="seachhAnswerA" v-on:click="seachhAnswerA = !seachhAnswerA; movePage(pageInfo.pageNo);">
                           <label for="FC1_01"><span class="bul"></span>답변 완료</label>
                         </p>
                         <p class="inputCheck typeA">
-                          <input type="checkbox" id="FC1_02" name="filter_check01" v-model="seachhAnswerX">
+                          <input type="checkbox" id="FC1_02" name="filter_check01" v-model="seachhAnswerX" v-on:click="seachhAnswerX = !seachhAnswerX; movePage(pageInfo.pageNo);">
                           <label for="FC1_02"><span class="bul"></span>답변 미완료</label>
                         </p>
                       </div>
@@ -112,8 +109,8 @@
                 </div>
               </div>
               <!--//bxSrchArea-->
-              <ul class="list_type01 mt4 scrollArea">
-                <template v-if="inquiryList === null">문의 내용이 없습니다.</template>
+              <ul class="list_type01 mt4 scrollArea" ref="inqList">
+                <template v-if="inquiryList.length === 0">문의 내용이 없습니다.</template>
                 <li v-for="(item, index) in inquiryList" v-on:click="getInquiryDetail(item.inqueryId)" v-else
                     :class="{on : inqueryId === item.inqueryId}"><!--선택된 선택효과 on클래스 추가 -->
                   <div class="write_info">
@@ -253,7 +250,7 @@ export default {
     return {
       memberId: this.$route.query.memberId,
       memberInfo: null,
-      inquiryList: null,
+      inquiryList: [],
       inquiryDetail: null,
       inqueryId: null,
       medicalInquiryAnswer: null,
@@ -285,7 +282,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/member/memberDetail`, { params: params })
       res.then(response => {
-        this.memberInfo = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.memberInfo = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) { console.log(error) })
     },
     // 문의상세 조회(param - 문의id)
@@ -297,7 +298,11 @@ export default {
         }
         var res = axios.get(`/api/v1/api/medicalInquery/medicalInqueryHospitalDetail`, { params: params })
         res.then(response => {
-          this.inquiryDetail = response.data.data
+          if (response.data.resultCode === '0000') {
+            this.inquiryDetail = response.data.data
+          } else {
+            alert(response.data.message)
+          }
         }).catch(function (error) { console.log(error) })
       }
     },
@@ -317,6 +322,8 @@ export default {
           alert('답변이 등록되었습니다.')
           this.medicalInquiryAnswer = ''
           this.getInquiryDetail(this.inqueryId)
+        } else {
+          alert(response.data.message)
         }
       }).catch(function (error) { console.log(error) })
     },
@@ -356,6 +363,7 @@ function GetinquiryList (obj) {
       obj.inquiryList = response.data.data.content
       obj.pageInfo.totalPages = response.data.data.totalPages
       obj.pageInfo.last = response.data.data.totalPages
+      obj.$refs.inqList.scrollTop = 0
       if (obj.inquiryList !== null) {
         obj.getInquiryDetail(obj.inquiryList[0].inqueryId)
       }
@@ -365,6 +373,8 @@ function GetinquiryList (obj) {
       for (let index = 1; index <= pageCnt; index++) {
         obj.pageInfo.pages.push(index)
       }
+    } else {
+      obj.inquiryList = []
     }
   }).catch(function (error) { console.log(error) })
 }

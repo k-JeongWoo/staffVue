@@ -45,7 +45,7 @@ export default [
     beforeEnter: (to, from, next) => {
       axios.get('/api/v1/api/emplystaff/emplystaffInfo')
         .then(function (response) {
-          console.log(response)
+          // console.log(response)
           if (response.data.resultCode === 'error') {
             next('/login')
           } else {

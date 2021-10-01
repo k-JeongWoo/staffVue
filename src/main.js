@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueCookie from 'vue-cookie'
 import AmCharts from 'amcharts3'
 import AmSerial from 'amcharts3/amcharts/serial'
 import dayjs from 'dayjs'
@@ -13,12 +12,10 @@ Vue.use(AmCharts)
 Vue.use(AmSerial)
 Vue.use(dayjs)
 
-Vue.use(VueCookie)
-
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/' || to.path === '/mainhome' || to.path === '/login') {
+  if (to.path === '/' || to.path === '/mainhome' || to.path === '/login' || to.path === '/auth/signUpForm') {
     next()
   } else {
     axios.get('/api/v1/api/emplystaff/emplystaffInfo')

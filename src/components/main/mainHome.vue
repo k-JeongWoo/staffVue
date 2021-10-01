@@ -27,11 +27,11 @@
                   <p class="filterCon_tit">검색 필터</p>
                   <div class="filterCon_list ">
                     <p class="inputCheck typeA">
-                      <input type="checkbox" id="FC1_01" name="filter_check01" v-model="seachhAnswerA">
+                      <input type="checkbox" id="FC1_01" name="filter_check01" v-model="seachhAnswerA" v-on:click="seachhAnswerA = !seachhAnswerA; movePage(pageInfo.pageNo);">
                       <label for="FC1_01"><span class="bul"></span>답변 완료</label>
                     </p>
                     <p class="inputCheck typeA">
-                      <input type="checkbox" id="FC1_02" name="filter_check01" v-model="seachhAnswerX">
+                      <input type="checkbox" id="FC1_02" name="filter_check01" v-model="seachhAnswerX" v-on:click="seachhAnswerX = !seachhAnswerX; movePage(pageInfo.pageNo);">
                       <label for="FC1_02"><span class="bul"></span>답변 미완료</label>
                     </p>
                   </div>
@@ -41,7 +41,7 @@
           </div>
           <!--//bxSrchArea-->
 
-          <ul class="list_type01 mt4 scrollArea">
+          <ul class="list_type01 mt4 scrollArea" ref="inqList">
             <li v-for="(item, index) in inquiryList" v-on:click="getInquiryDetail(item.medicalInquiryId)"
                 :class="{on : medicalInquiryId === item.medicalInquiryId}"><!--선택된 선택효과 on클래스 추가 -->
               <div class="write_info">
@@ -203,17 +203,6 @@
           </div>
           <!--//in_col 오른쪽 넓은영역중 오른쪽영역-->
 
-          <!--btnWrapB 하단 삭제, 프린트버튼 -->
-          <div class="btnWrapB">
-            <button type="button" class="btn_ico">
-              <i class="ico_del_gray01">삭제</i>
-            </button>
-            <button type="button" class="btn_ico">
-              <i class="ico_print_gray">프린트</i>
-            </button>
-          </div>
-          <!--//btnWrapB 하단 삭제, 프린트버튼 -->
-
         </div>
       </div>
       <!-- //contents중 오른쪽 넓은영역 -->
@@ -275,7 +264,11 @@ export default {
         }
         var res = axios.get(`/api/v1/api/medicalInquery/medicalInqueryHospitalDetail`, { params: params })
         res.then(response => {
-          this.inquiryDetail = response.data.data
+          if (response.data.resultCode === '0000') {
+            this.inquiryDetail = response.data.data
+          } else {
+            alert(response.data.message)
+          }
         }).catch(function (error) { console.log(error) })
       }
     },
@@ -294,6 +287,9 @@ export default {
             alert('답변이 등록되었습니다.')
             this.medicalInquiryAnswer = ''
             this.getInquiryDetail(this.medicalInquiryId)
+            GetinquiryList(this)
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) { console.log(error) })
       }
@@ -329,17 +325,22 @@ function GetinquiryList (obj) {
   }
   var res = axios.get(`/api/v1/api/medicalInquery/medicalInqueryHospitalList`, { params: params })
   res.then(response => {
-    obj.inquiryList = response.data.data.content
-    obj.pageInfo.totalPages = response.data.data.totalPages
-    obj.pageInfo.last = response.data.data.totalPages
-    if (obj.inquiryList !== null) {
-      obj.getInquiryDetail(obj.inquiryList[0].medicalInquiryId)
-    }
-    // 페이징 배열 생성
-    obj.pageInfo.pages = []
-    let pageCnt = Math.ceil(response.data.data.totalElements / obj.pageInfo.perPageCnt)
-    for (let index = 1; index <= pageCnt; index++) {
-      obj.pageInfo.pages.push(index)
+    if (response.data.resultCode === '0000') {
+      obj.inquiryList = response.data.data.content
+      obj.pageInfo.totalPages = response.data.data.totalPages
+      obj.pageInfo.last = response.data.data.totalPages
+      obj.$refs.inqList.scrollTop = 0
+      if (obj.inquiryList !== null) {
+        obj.getInquiryDetail(obj.inquiryList[0].medicalInquiryId)
+      }
+      // 페이징 배열 생성
+      obj.pageInfo.pages = []
+      let pageCnt = Math.ceil(response.data.data.totalElements / obj.pageInfo.perPageCnt)
+      for (let index = 1; index <= pageCnt; index++) {
+        obj.pageInfo.pages.push(index)
+      }
+    } else {
+      alert(response.data.message)
     }
   }).catch(function (error) { console.log(error) })
 }

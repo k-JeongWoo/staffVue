@@ -1,232 +1,286 @@
 <template>
-  <!--  container  -->
-  <div class="container noBg info_input_01">
-    <!-- 본인인증 서비스 팝업을 호출 form -->
-    <form name="form_chk" method="post">
-      <input type="hidden" name="m" v-model="m">						<!-- 필수 데이타로, 누락하시면 안됩니다. -->
-      <input type="hidden" name="EncodeData" v-model="sEncData">		<!-- 위에서 업체정보를 암호화 한 데이타입니다. -->
-    </form>
-    <!--contents-->
-    <div class="contents">
-      <ul class="infoInput_list mb7">
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">아이디<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled style과 터치가 안되도록 css속성넣음. -->
-            <input type="text" v-model="usr_id" name="" value="홍길동" v-on:change="emailChkFlag = false">
-            <button v-on:click="usrIdCheck">중복확인</button>
-            <br />* 이메일 주소로
-          </p>
-        </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">비밀번호<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled-->
-            <input type="password" v-model="usr_password" name="" value="" >
-            <br /> 암호화 필요
-          </p>
-        </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">비밀번호 확인<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled-->
-            <input type="password" v-model="usr_password_chk" name="" value="" >
-          </p>
-        </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">이름<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled style과 터치가 안되도록 css속성넣음. -->
-            <input type="text" v-model="usr_name" name="" value="홍길동" >
-          </p>
-        </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">핸드폰 번호<span class="required">*</span></p>
-          <p class="input "><!--수정불가 :: disabled-->
-            <input type="text" v-model="usr_telnum" name="" value="010-1234-5678" >
-            <button v-on:click="nicePopUp">인증하기</button>
-          </p>
-        </li>
-        <ul class="infoInput_list">
-          <li class="inputBox mb3">
-            <p class="input_tit">주소 (선택)</p>
-          </li>
-          <li class="inputBox centerFlex mb3 address">
-            <p class="input "><!--수정불가 :: disabled-->
-              <input type="text" v-model="usr_zipcode" name="" placeholder="우편번호" disabled>
-            </p>
-            <button type="button" @click="showApi" class="btn_border sm ">검 색</button>
-          </li>
-          <li class="inputBox centerFlex mb3">
-            <p class="input">
-              <input type="text" v-model="usr_address" name="" placeholder="상세주소">
-            </p>
-          </li>
-          <li class="inputBox centerFlex mb3">
-            <p class="input">
-              <input type="text" v-model="usr_address_detail" name="" placeholder="상세주소">
-            </p>
-          </li>
-          <div ref="embed"></div>
-        </ul>
-        <li class="inputBox centerFlex mb7">
-          <p class="input_tit">병원명<span class="required">*</span></p>
-          <p class="input disabled"><!--수정불가 :: disabled-->
-            <select v-model="hospitalId">
-              <option value="">-선택-</option>
-              <option v-for="item in hospitalAllList" v-bind:value="item.hospitalId">{{item.pdYadmNm}}</option>
-            </select>
-          </p>
-        </li>
-        <li class="inputBox centerFlex mb3">
-          <p class="input_tit">직책<span class="required">*</span></p>
-          <p class="radioBox">
-            <span class="inputRadio typeA "><!--수정불가 :: disabled-->
-              <input type="radio" name="position" id="position00" v-model="usr_position" value="D" >
-              <label for="position00">
-                <span class="bul"></span>의사
-              </label>
-            </span>
-            <span class="inputRadio typeA  ml4"><!--수정불가 :: disabled-->
-              <input type="radio" name="position" id="position01" v-model="usr_position" value="N" >
-              <label for="position01">
-                <span class="bul"></span>간호사
-              </label>
-            </span>
-            <span class="inputRadio typeA  ml4"><!--수정불가 :: disabled-->
-              <input type="radio" name="position" id="position02" v-model="usr_position" value="S" >
-              <label for="position02">
-                <span class="bul"></span>병원 스태프
-              </label>
-            </span>
-            <span class="inputRadio typeA  ml4"><!--수정불가 :: disabled-->
-              <input type="radio" name="position" id="position03" v-model="usr_position" value="E" >
-              <label for="position03">
-                <span class="bul"></span>기타
-              </label>
-            </span>
-          </p>
-        </li>
-        <li class="inputBox centerFlex mb7">
-          <p class="input_tit">진료과목<span class="required">*</span></p>
-          <p class="input disabled"><!--수정불가 :: disabled-->
-            <select v-model="medical_program" :disabled="usr_position !== 'D'">
-              <option value="">-선택-</option>
-              <option v-for="item in clinicList" v-bind:value="item.clinicCode">{{item.clinicName}}</option>
-            </select>
-          </p>
-        </li>
-      </ul>
+
+  <!-- innerWrap -->
+  <div class="innerWrap myInfo_manage">
+    <div class="top_wrap">
+      <h2 class="headline05 fl">내 정보 관리</h2>
+      <!--bxSrchArea //bxSrchArea-->
     </div>
-    <!--//contents-->
-    <!-- footer -->
-    <div class="footer typeB">
-      <div class="btnArea">
-        <button class="btn_fill"
-                @click="regUsrInfo">가입 승인 요청
-        </button>
+    <!-- contents -->
+    <div class="contents">
+      <div class="myInfo_list">
+        <form>
+          <ul>
+            <li class="inputList_wrap">
+              <p class="input_label">프로필 사진</p>
+              <div class="profile_picture">
+                <input type="file" id="profile" accept="image/*" ref="fileInput" @change="onFileChange">
+                <label for="profile" class="profile_img" >
+                  <img v-show="imageSrc" :src="imageSrc" alt="이미지">
+                </label>
+                <p
+                  class="form-control"
+                  placeholder="Input Image URL or  Drag & Drop or Select"
+                  v-model="filename"
+                  @dragover.prevent
+                  @dragenter.prevent
+                  @drop.prevent="onDrop">{{filename === '' ? '사진을 추가해주세요.' : filename}}</p><!--//20210901 텍스트 수정-->
+              </div>
+            </li>
+            <li class="inputList_wrap">
+              <p class="input_label">아이디</p>
+              <div class="input disabled">
+                <input type="email" value="sample@email.com" v-model="emplyInfo.emplyEmail" readonly>
+              </div>
+            </li>
+            <li class="inputList_wrap">
+              <p class="input_label">비밀번호</p>
+              <button type="button" class="btn_text pd0" @click="emplyPasswordModal = true">변경하기</button>
+            </li>
+            <li class="inputList_wrap">
+              <p class="input_label">이름</p>
+              <div class="input disabled">
+                <input type="text" value="홍길동" v-model="emplyInfo.emplyName" readonly>
+              </div>
+            </li>
+            <li class="inputList_wrap">
+              <p class="input_label">핸드폰</p>
+              <div class="inputWrap">
+                <p class="input disabled">
+                  <input type="text" value="010-1234-1234" v-model="emplyInfo.emplyHpno">
+                </p>
+                <button type="button" class="btn_border">변경</button>
+              </div>
+            </li>
+            <li>
+              <div ref="embed"></div>
+              <div class="inputList_wrap">
+                <p class="input_label">주소</p>
+                <div class="inputWrap">
+                  <p class="input w01 disabled">
+                    <input type="text" value="" readonly="" v-model="emplyInfo.emplyZipcode">
+                  </p>
+                  <button type="button" @click="showApi" class="btn_border">우편번호 찾기</button>
+                </div>
+              </div>
+              <div class="inputList_wrap">
+                <p class="input_label"></p>
+                <div class="inputWrap">
+                  <p class="input disabled">
+                    <input type="text" value="" v-model="emplyInfo.emplyAddress">
+                  </p>
+                </div>
+              </div>
+              <div class="inputList_wrap">
+                <p class="input_label"></p>
+                <div class="inputWrap">
+                  <p class="input">
+                    <input type="text" value="" v-model="emplyInfo.emplyAddressDetail">
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="btnWrapA ">
+            <button type="button" class="btn_fill fl" @click="emplyStaffDelete">탈퇴</button>
+            <button type="button" class="btn_fill_cancel" @click="$router.go(-1)">취소</button>
+            <button type="button" class="btn_fill" @click="emplyStaffUpdate">수정</button>
+          </div>
+        </form>
       </div>
     </div>
-    <!-- //footer -->
+    <!-- //contents -->
+
+    <!-- ##### Popup  --  type01 password_mody [비밀번호변경] -->
+    <div class="popup_mask" v-show="emplyPasswordModal" style="display: block">
+        <div class="popup_wrapper">
+          <div class="popup_container type01 password_mody"> <!--type01은 상단 헤더 있는 popup // type02는 타이틀이 중앙에 위치한-->
+            <div class="popup_header">
+              <h3>비밀번호 변경</h3>
+              <button type="button" class="btn_popClose" @click="changePassCheckToggle">
+                <i class="ico_close_purple_x">닫기</i>
+              </button>
+            </div>
+            <div class="popup_body">
+              <ul>
+                <li>
+                  <p class="label_txt01">현재 비밀번호</p>
+                  <div>
+                    <p class="input">
+                      <input type="password" placeholder="현재 비밀번호" v-model="emplyPasswordInfo.confirmPassword">
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <p class="label_txt01">변경할 비밀번호</p>
+                  <div>
+                    <p class="input" :class="{error: changePassCheckFlag}"><!--에러일경우 error 클래스-->
+                      <input type="password" placeholder="비밀번호" v-model="emplyPasswordInfo.changePassword">
+                    </p>
+                  </div>
+                  <div>
+                    <p class="input" :class="{error: changePassCheckFlag}"><!--에러일경우 error 클래스-->
+                      <input type="password" placeholder="비밀번호 확인" v-model="emplyPasswordInfo.changePasswordChk">
+                      <span class="helper_text" v-if="changePassCheckFlag">잘못된 비밀번호입니다.</span>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="popup_footer">
+              <button type="button" class="btn_fill_cancel" @click="changePassCheckToggle">취소</button>
+              <button type="button" class="btn_fill" @click="emplyStaffChangePassword">저장</button>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- ///// Popup -->
   </div>
+  <!-- //innerWrap -->
+
 </template>
 
 <script>
 import axios from 'axios'
-import CryptoJS from 'crypto-js/crypto-js'
+import {neoMethod} from '../../api/common'
+import CryptoJS from 'crypto-js/aes.js'
 
 export default {
   data () {
     return {
-      usr_id: '',
-      usr_password: '',
-      usr_password_chk: '',
-      usr_name: '',
-      usr_telnum: '',
-      usr_zipcode: '',
-      usr_address: '',
-      usr_address_detail: '',
-      hospitalId: '',
-      usr_position: 'D',
-      medical_program: '',
-      hospitalAllList: [],
-      clinicList: [],
-      emailChkFlag: false,
+      emplyInfo: {
+        emplyEmail: '',
+        emplyAddress: '',
+        emplyAddressDetail: '',
+        emplyHpno: '',
+        emplyName: '',
+        emplyZipcode: '',
+        hospitalId: 0,
+        emplyImage: ''
+      },
+      emplyPasswordInfo: {
+        changePassword: '',
+        changePasswordChk: '',
+        confirmPassword: ''
+      },
+      emplyPasswordModal: false,
+      changePassCheckFlag: false,
+      filename: '',
+      imageSrc: '',
       sEncData: '',
       m: 'checkplusService'
     }
   },
+  mounted: function () {
+    this.phoneFomatter = neoMethod.phoneFomatter
+  },
   methods: {
-    regUsrInfo: function () {
-      console.log(CryptoJS.AES.encrypt(this.usr_password, 'neoPriEncrypt!!!').toString())
-      let obj = this
-      if (!validateEmail(this.usr_id)) {
-        alert('이메일 형식이 옳바르지 않습니다.')
+    getEmplystaffInfo: function () {
+      var res = axios.get(`/api/v1/api/emplystaff/emplystaffInfo`)
+      res.then(response => {
+        if (response.data.resultCode === '0000') {
+          this.emplyInfo = response.data.data
+          this.emplyInfo.emplyHpno = this.phoneFomatter(this.emplyInfo.emplyHpno)
+          this.imageSrc = this.emplyInfo.emplyImage
+        } else {
+          alert(response.data.message)
+        }
+      }).catch(function (error) { console.log(error) })
+    },
+    emplyStaffUpdate: function () {
+      /*
+      let obj = this.emplyInfo
+      obj.emplyHistory = 'A'
+      obj.emplyNation = 'L'
+      obj.emplyResidentRegistration = 'N'
+      */
+
+      var fd = new FormData()
+      fd.append('imgFile', this.$refs.fileInput.files[0])
+      fd.append('emplyAddress', this.emplyInfo.emplyAddress)
+      fd.append('emplyAddressDetail', this.emplyInfo.emplyAddressDetail)
+      fd.append('emplyHistory', 'A')
+      fd.append('emplyHpno', this.emplyInfo.emplyHpno)
+      fd.append('emplyName', this.emplyInfo.emplyName)
+      fd.append('emplyNation', 'L')
+      fd.append('emplyResidentRegistration', 'N')
+      fd.append('emplyZipcode', this.emplyInfo.emplyZipcode)
+      var res = axios.post(`/api/v1/api/emplystaff/emplyStaffUpdate`, fd,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      res.then(response => {
+        if (response.data.resultCode === '0000') {
+          alert('수정이 완료되었습니다.')
+          // 새로고침
+          this.$router.go()
+        } else {
+          alert(response.data.message)
+        }
+      }).catch(function (error) { console.log(error) })
+    },
+    emplyStaffDelete: function () {
+      if (confirm('탈퇴 하시겠습니까?')) {
+        var res = axios.post(`/api/v1/api/emplystaff/emplyStaffDelete`)
+        res.then(response => {
+          if (response.data.resultCode === '0000') {
+            alert('탈퇴 처리 되었습니다.')
+            this.$router.push({
+              path: '/login'
+            })
+          } else {
+            alert('탈퇴 처리가 실패하였습니다.')
+          }
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
+    },
+    emplyStaffChangePassword: function () {
+      let obj = this.emplyPasswordInfo
+      if (obj.confirmPassword === '') {
+        alert('현재 비밀번호를 입력해주세요.')
         return false
-      } else if (!this.emailChkFlag) {
-        alert('이메일 중복확인을 해주세요.')
-      } else if (!validatePassword(this.usr_password)) {
+      } else if (!validatePassword(obj.changePassword)) {
         alert('영문+숫자+특수문자 1자 이상 포함, 8~16자로 구성해주세요.')
+        this.changePassCheckFlag = true
         return false
-      } else if (this.usr_password !== this.usr_password_chk) {
+      } else if (obj.changePassword !== obj.changePasswordChk) {
         alert('비밀번호가 일치하지 않습니다.')
-        return false
-      } else if (this.hospitalId === '') {
-        alert('병원을 선택해 주세요.')
-        return false
-      } else if (this.medical_program === '') {
-        alert('진료과목을 선택해 주세요.')
+        this.changePassCheckFlag = true
         return false
       } else {
-        axios.post(`/api/v1/api/auth/signup`,
-          {
-            'emplyAddress': this.usr_address,
-            'emplyAddressDetail': this.usr_address_detail,
-            'emplyZipcode': this.usr_zipcode,
-            'emplyHpno': this.usr_telnum,
-            'emplyName': this.usr_name,
-            'emplyEmail': this.usr_id,
-            'emplyPassword': CryptoJS.AES.encrypt(this.usr_password, 'neoPriEncrypt!!!').toString(),
-            // 'emplyPassword': this.usr_password,
-            'hospitalId': this.hospitalId,
-            'emplyCharge': this.usr_position,
-            'emplyClinicCode': this.medical_program
-          },
-          {withCredentials: true}
-        ).then(function (response) {
-          console.log(response)
-          if (response.data.status === 200) {
-            obj.$router.push({
-              path: '/'
-            })
+        this.changePassCheckFlag = false
+        let params = {
+          confirmPassword: CryptoJS.encrypt(obj.confirmPassword, 'neoPriEncrypt!!!').toString(),
+          changePassword: CryptoJS.encrypt(obj.changePassword, 'neoPriEncrypt!!!').toString()
+        }
+        var res = axios.post(`/api/v1/api/emplystaff/emplyStaffChangePassword`, params)
+        res.then(response => {
+          if (response.data.resultCode === '0000') {
+            alert('비밀번호 변경이 완료되었습니다.')
+            this.changePassCheckToggle()
           } else {
             alert(response.data.message)
           }
-        })
+        }).catch(function (error) { console.log(error) })
       }
+    },
+    changePassCheckToggle: function () {
+      if (this.emplyPasswordModal === true) {
+        this.emplyPasswordInfo.confirmPassword = ''
+        this.emplyPasswordInfo.changePassword = ''
+        this.emplyPasswordInfo.changePasswordChk = ''
+        this.changePassCheckFlag = false
+      }
+      this.emplyPasswordModal = !this.emplyPasswordModal
     },
     nicePopUp: function () {
       document.form_chk.action = 'https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb'
       document.form_chk.target = 'popupChk'
       document.form_chk.submit()
-    },
-    usrIdCheck: function () {
-      let obj = this
-      if (!validateEmail(this.usr_id) || this.usr_id === '') {
-        alert('이메일 형식이 옳바르지 않습니다.')
-        return
-      }
-      axios.post(`/api/v1/api/auth/loginDuplicate`,
-        {
-          'emplyEmail': this.usr_id
-        },
-        {withCredentials: true}
-      ).then(function (response) {
-        console.log(response)
-        if (response.data.status === 200 && response.data.data === 0) {
-          alert('사용 가능한 이메일 입니다.')
-          obj.emailChkFlag = true
-        } else {
-          alert('이미 사용중인 이메일 주소입니다.')
-          obj.emailChkFlag = false
-        }
-      })
     },
     showApi () {
       new window.daum.Postcode({
@@ -250,37 +304,54 @@ export default {
             fullRoadAddr += extraRoadAddr
           }
 
-          this.usr_zipcode = data.zonecode // 5자리 새우편번호 사용
-          this.usr_address = fullRoadAddr
+          this.emplyInfo.emplyZipcode = data.zonecode // 5자리 새우편번호 사용
+          this.emplyInfo.emplyAddress = fullRoadAddr
         }
       }).embed(this.$refs.embed)
+    },
+    onDrop (event) {
+      this.inputImageFile(event.dataTransfer.files)
+    },
+    onClickFile (event) {
+      this.$refs.fileInput.click()
+    },
+    onFileChange (event) {
+      this.inputImageFile(event.target.files)
+    },
+    inputImageFile (files) {
+      if (files.length) {
+        let file = files[0]
+        if (!/^image\//.test(file.type)) {
+          alert('이미지 파일만 등록이 가능합니다')
+          return false
+        }
+        this.filename = file.name
+        this.preview(file)
+      }
+    },
+    onClickUpload () {
+      this.preview(this.filename)
+    },
+    preview (file) {
+      if (typeof file === 'string') {
+        this.imageSrc = file
+      } else {
+        let vm = this
+        let reader = new FileReader()
+        reader.onload = () => {
+          vm.imageSrc = reader.result
+        }
+        reader.readAsDataURL(file)
+      }
     }
   },
   created () {
-    let obj = this
-    axios.get('/api/v1/api/hospital/hospitalAllList')
-      .then(function (response) {
-        obj.hospitalAllList = response.data.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-    axios.get('/api/v1/api/clinic/clinicList')
-      .then(function (response) {
-        obj.clinicList = response.data.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    this.getEmplystaffInfo()
   }
 }
 
 function validatePassword (passwordTxt) {
   return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/.test(passwordTxt)
-}
-function validateEmail (emailTxt) {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  return re.test(String(emailTxt).toLowerCase())
 }
 </script>
 

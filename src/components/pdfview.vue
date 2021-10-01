@@ -1,47 +1,55 @@
 <template>
-  <div class="container login01 noBg" style="width: 100%">
-    {{currentPage}} / {{pageCount}}
-    <button v-on:click="currentPage++">+</button>
-    <button v-on:click="currentPage--">-</button>
-    <pdf v-bind:src="pdfSrc"
-         :page="currentPage"
-         @num-pages="pageCount = $event"
-         @page-loaded="currentPage = $event" />
+  <div class="" style="width: 100%">
+    <vue-pdf-app style="height: 100vh;" :pdf="pdf" :config="config"></vue-pdf-app>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import pdf from 'vue-pdf'
-
-// since vue-pdf may be used server-side (see vuejs ssr)
-// converts base64 string into binary data as a javascript string
-var base64ToString = process.env.VUE_ENV === 'server' ? function (base64) { return Buffer.from(base64, 'base64').toString() } : window.atob
+import VuePdfApp from 'vue-pdf-app/dist/vue-pdf-app.umd.min'
 
 export default {
   data () {
     return {
-      pdfSrc: {},
-      currentPage: 1,
-      pageCount: 0,
-      numPages: undefined
+      config: {
+        toolbar: {
+          toolbarViewerLeft: { findbar: false }
+        }
+      },
+      pdf: null
     }
   },
   components: {
-    pdf
+    VuePdfApp
   },
-  beforeCreate () {
+  async beforeCreate () {
     var params = {
       checkupMasterId: this.$route.query.checkupMasterId,
       memberId: this.$route.query.memberId
     }
-    console.log(params)
-    var res = axios.get(`/api/v1/api/checkupDetail/checkupDocument`, { params: params })
-    res.then(response => {
-      console.log(response)
-      this.pdfSrc = { data: base64ToString(response.data.data.checkupPdf) }
-    }).catch(function (error) { console.log(error) })
+    try {
+      await axios.get(`/api/v1/api/checkupDetail/checkupDocument`, { params: params })
+        .then(response => {
+          if (response.data.resultCode === '0000') {
+            this.pdf = base64ToArrayBuffer(response.data.data.checkupPdf)
+          } else {
+            alert(response.data.message)
+          }
+        }).catch(function (error) { console.log(error) })
+    } catch (error) {
+      console.log(error)
+    }
   }
+}
+
+function base64ToArrayBuffer (base64) {
+  var binaryString = window.atob(base64)
+  var len = binaryString.length
+  var bytes = new Uint8Array(len)
+  for (var i = 0; i < len; i++) {
+    bytes[i] = binaryString.charCodeAt(i)
+  }
+  return bytes.buffer
 }
 </script>
 

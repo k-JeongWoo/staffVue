@@ -2,7 +2,8 @@
 
 /* ===== login ===== */
 .login{position: fixed; left: 0; right: 0; bottom:0; top: 0; width:100%; height: 100%; min-height: 700px;}
-.login .logo{display: block; width: 40px; height:40px; position: absolute; left: 140px; top:60px; font-size: 0; text-indent: -9999px; background: url(../images/common/logo_ico.png)no-repeat center; background-size: cover;}
+.login .logo{display: block; width:182px; height:36px; position: absolute; left: 140px; top:60px; font-size: 0; text-indent: -9999px; background:url(../images/common/logo_cellimedi.png)no-repeat center; background-size: cover;}
+/* .login .logo{display: block; width: 40px; height:40px; position: absolute; left: 140px; top:60px; font-size: 0; text-indent: -9999px; background: url(../images/common/logo_ico.png)no-repeat center; background-size: cover;} */
 .login .copywriter{position: absolute; left: 140px; bottom:60px;font-size: 14px;line-height: 20px;color: #727272;}
 .login .input input::placeholder{color:#B2B2B2;}
 .login .login_wrap{display: -webkit-flex; display: -ms-flexbox; display: flex; height:100%;}
@@ -16,8 +17,8 @@
 .login .login_cont .btnWrap [class^="btn_"]{display: block; width: 100%;}
 .login .inputCheck{margin-top:16px;}
 .login .inputCheck.typeA input[type="checkbox"] + label{font-weight: 500;}
-.login .login_errorBox{position:relative; width:100%; padding:10px 0 0 30px; background:#fff; z-index: 10;}
-.login .login_errorBox::before{content: ''; display: block; position:absolute; left: 0; top: 12px; width:24px; height: 24px; background: url(../images/common/common_ico.png)no-repeat -96px -48px; background-size: 240px;}
+.login .login_errorBox{position:relative; width:100%; padding:0 0 0 30px; margin-top: 10px; background:#fff; z-index: 10;}
+.login .login_errorBox::before{content: ''; display: block; position:absolute; left: 0; top: -2px; width:24px; height: 24px; background: url(../images/common/common_ico.png)no-repeat -96px -48px; background-size: 240px;}
 .login .login_errorBox>*{font-weight: 500; font-size: 14px; line-height: 20px; color: #f63e3e !important;}
 .login .login_bgBox{width:100%;height:100%; padding-top: 132px; max-width: calc(100vw - 732px); flex-grow: 1; background:url(../images/common/login_bg.svg)no-repeat center bottom #CDD4F6; background-size:contain; text-align: center;color: #7E84A3;}
 .login .login_bgBox h2{margin-bottom: 14px; font-weight: 700; font-size: 36px; line-height: 28px; text-transform: capitalize;}
@@ -27,18 +28,36 @@
 /*join*/
 .wrap .innerWrap.join{padding:0; background:#fff;}
 .header_type01{height:100px; padding:30px 60px; border-bottom: 1px solid #D7DBEC;}
-.header_type01 h1{width:203px; height:40px; font-size:0; background:url(../images/common/logo_text.png)no-repeat center; background-size: cover;}
+.header_type01 h1{width:182px; height:36px; font-size:0; background:url(../images/common/logo_cellimedi.png)no-repeat center; background-size: cover;}
 .footer_type01{display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-justify-content:space-between;justify-content: space-between;align-items: center; height:57px; padding:0 50px; border-top : 1px solid #D7DBEC;}
 .footer_type01 .navi{display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-justify-content:space-between;justify-content: space-between;align-items: center; width: 324px;}
 .footer_type01 .navi li>*{text-transform: capitalize;font-size: 14px; line-height: 16px;color: #7E84A3;}
 .footer_type01 .copyright{text-transform: capitalize;font-size: 14px; line-height: 16px;color: #7E84A3;}
 .join_wrap{width:743px; margin:36px auto 62px;}
+.join_wrap .join_input .signUp_section + .signUp_section{margin-top: 30px;}
 .join_wrap .privacy_list{margin-bottom:96px;}
 .join_wrap .privacy_item + .privacy_item{margin-top: 36px;}
 .join_wrap .privacy_item .headline07{margin-bottom: 10px;}
 .join_wrap .privacy_item .privacy_box{width:100%; height: 188px; margin-bottom: 10px; padding-right:26px; background: #FFFFFF; padding:10px; border: 1px solid #EDEBFB;box-sizing: border-box;-webkit-border-radius: 8px;border-radius: 8px;}
 .join_wrap .privacy_item .scrollArea{height:100%; font-size: 16px; line-height: 28px; color: #31313D;}
-.signUp_section+.signUp_section{margin-top: 96px;}
+
+.privacy_box> section,
+.privacy_box> .privacy_txt section{margin-bottom:20px;}
+.privacy_box> .privacy_txt [class*="headline"],
+.privacy_box> .privacy_txt [class*="cont_txt"]{margin-bottom: 5px;}
+.privacy_box .indent_list{padding:5px 10px;}
+.privacy_box .indent_list li{margin-bottom:5px; font-size:14px; line-height:18px;}
+.privacy_box .indent_list.decimal,
+.privacy_box .indent_list.disc{padding-left:25px;}
+.privacy_box .indent_list.decimal li{list-style: decimal;}
+.privacy_box .indent_list.disc li{list-style: disc;}
+.privacy_box table{width:100%; margin-bottom: 15px; table-layout:fixed;border-bottom:1px solid #9b9b9b}
+.privacy_box table th{padding:5px;font-size: 13px; font-weight: 400; color:#fff;line-height:1.1;border-left:1px solid #fff;background:#9b9b9b; word-break: keep-all;}
+.privacy_box table td{padding:5px;font-size: 13px; font-weight: 400; color:#6e6e6e;line-height:1.2; vertical-align: top; border-top:1px solid #c9c9c9;border-left:1px solid #c9c9c9; word-break:break-all;}
+.privacy_box table tbody tr:first-child td{border-top:0;}
+.privacy_box table th:first-child,
+.privacy_box table td:first-child{border-left:0;}
+.privacy_box table td p{margin-bottom: 5px;}
 
 /*Main*/
 .user_listArea{position:relative; padding:24px 22px 76px; }
@@ -61,7 +80,7 @@
 .detail_view .wrap_view .detail_cont::-webkit-scrollbar-thumb {background-color: #D7DBEC; border-radius: 8px; background-clip: padding-box; border: 2px solid transparent;}
 .detail_view .wrap_view .detail_cont::-webkit-scrollbar-track {background-color: transparent; border-radius: 8px;}
 /*detail_commentW*/
-.comment_from{display: -webkit-flex; display: -ms-flexbox; display: flex; align-items: center; width:100%; height:48px; padding: 10px 16px; margin-bottom: 11px; background: #F7F5FF; border-radius: 8px;}
+.comment_from{display: -webkit-flex; display: -ms-flexbox; display: flex; align-items: center; width:100%; height:48px; padding:10px 0px 10px 16px; margin-bottom: 11px; background: #F7F5FF; border-radius: 8px;}
 .comment_from>p{flex-shrink: 0;font-size: 16px;line-height: 28px;color: #31313D; margin-right: 10px;}
 .comment_from>p i{margin-right: 10px;}
 .comment_from .select{width:100%;}
@@ -90,12 +109,15 @@
 
 /* ==========  내정보관리 ========== */
 .innerWrap.myInfo_manage{background:#fff;}
-.myInfo_list{width:640px;}
+.myInfo_list{width:640px; position:relative;}
+.top_btn{position:absolute; width: 100%; top: -50px; left: 0;}
 .myInfo_list .inputList_wrap{margin-top:24px; -webkit-justify-content:flex-start; justify-content:flex-start;}
-.profile_picture{width: 100%; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-justify-content:flex-start;justify-content: flex-start;align-items: center;}
+.profile_picture{position:relative; width: 100%; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-justify-content:flex-start;justify-content: flex-start;align-items: center;}
 .profile_picture input{display: none;}
-.profile_picture .profile_img{display: block; flex-shrink: 0; width: 60px; height: 60px; margin-right: 20px; -webkit-border-radius: 30px;border-radius: 30px; background:#F5F6FA url(../images/common/icon_camera.png) no-repeat center; background-size: 24px; overflow: hidden; cursor: pointer;}
+.profile_picture .profile_img{ display: block; flex-shrink: 0; width: 60px; height: 60px; margin-right: 20px; -webkit-border-radius: 30px;border-radius: 30px; background:#F5F6FA url(../images/common/icon_camera.png) no-repeat center; background-size: 24px; overflow: hidden;} 
+.profile_picture label.profile_img{cursor: pointer;}
 .profile_picture .profile_img img{display: block; width: 100%;}
+.profile_picture .img_del{position:absolute; left:45px; top: 0;}
 .profile_picture p{font-size: 14px;line-height: 24px; color: #9BA0BC;}
 
 .popup_container.password_mody .popup_body ul{padding-top:16px;}
@@ -122,8 +144,8 @@
 .popup_container.new_patient .inputList_wrap{-webkit-justify-content:flex-start; justify-content:flex-start;}
 .popup_container.new_patient .helper_text{padding:0;}
 .popup_container.new_patient .textarea{height:260px}
-.popup_container.new_patient .input,
-.popup_container.new_patient .select{width:150px}
+/* .popup_container.new_patient .input, */
+.popup_container.new_patient .select{width:134px}
 
 
 /* ========== 환자 상세 정보 ========== */
@@ -148,7 +170,7 @@
 .paperweight_table .itme_info:hover .tit{color: #60CFE3; -webkit-transition: color 250ms ease-out;  -moz-transition: color 250ms ease-out; -o-transition: color 250ms ease-out; transition: color 250ms ease-out; }
 .paperweight_table .itme_info:hover .tit::before{background-position:-18px -125.3px;}
 .plan_list{margin-bottom: 8px;}
-.plan_list .item{position:relative; margin-top: 8px; padding:12px; -webkit-border-radius: 8px; border-radius: 8px;}
+.plan_list .item{position:relative; margin-top: 8px; margin-bottom: 0; padding:12px; -webkit-border-radius: 8px; border-radius: 8px;}
 .plan_list .item.type01{background: #F4FDFF;}
 .plan_list .item.type02{background:#E5F7FB;}
 .plan_list .item.type03{background: #D7F3F8;}
@@ -165,28 +187,36 @@
 .popup_container.green_planAdd .popup_body .input_label{width:96px;}
 
 .popup_container.medirecordsEdit{width: 673px; height: 894px; padding:24px;}
+.popup_container.medirecordsEdit .inputList_wrap{-webkit-justify-content:flex-start; justify-content:flex-start;}
 .popup_container.medirecordsEdit .popup_body{padding:16px 0 8px;}
 .popup_container.medirecordsEdit .popup_body > ul{height: 716px; margin-right: -10px; padding-right: 10px;}
 .popup_container.medirecordsEdit .input_label{width: 96px;}
 .popup_container.medirecordsEdit .textarea{padding: 18px 10px 18px 18px;}
+.popup_container.medirecordsEdit .inputList_wrap .fixDate .vdp-datepicker__calendar{position:fixed; bottom: -170px;}
 
 /*기능별건강*/
 .patient_info_health01 .contents .arrange_tab .colItem{padding:22px 32px 22px 24px;}
+[class*="patient_info_"] [class*="list_"] .normal_abnormal{text-align: center;}
+[class*="patient_info_"] [class*="list_"] .normal_abnormal table{width: 100%; height:72px;}
+[class*="patient_info_"] [class*="list_"] .normal_abnormal table td{height:32px; padding:2px; }
+[class*="patient_info_"] [class*="list_"] .normal_abnormal .normal_info span{display: block; margin:0 auto; width:100%; height:32px; padding:4px; line-height: 24px; -webkit-border-radius: 4px; border-radius:4px; font-weight: 400; font-size: 14px;}
+[class*="patient_info_"] [class*="list_"] .normal_abnormal .normal_info.type00 span{background:#F5F6FA;color:#31313D; }
+[class*="patient_info_"] [class*="list_"] .normal_abnormal .normal_info.type01 span{background:#F63E3E;color:#fff; }
+[class*="patient_info_"] [class*="list_"] .normal_abnormal .year{line-height: 28px; color: #7E84A3;}
+[class*="patient_info_"] [class*="list_"] .nodata{position:relative; height: 80px; padding:16px; text-align: center; display: table; background: #F5F6FA;}
+[class*="patient_info_"] [class*="list_"] .nodata p{display: table-cell; vertical-align: middle; font-size:14px; line-height: 24px; font-weight:400; color: #9BA0BC;}
+[class*="patient_info_"] [class*="list_"] .nodata p span{display: block; font-size:12px; line-height: 24px; font-weight:400; color: #9BA0BC;}
+[class*="patient_info_"] [class*="list_"] .nodata p::before{content: ''; display: inline-block; width: 18px; height:18px;margin:0 3px; vertical-align: middle; background:url(../images/common/common_ico.png)no-repeat -54px -125.3px; background-size:240px; }
+
 .list_barGraph{height: 100%; margin-right: -10px; padding-right: 10px;}
 .list_barGraph:after{content: ''; visibility: hidden; display: block; clear: both;}
-.list_barGraph .item{float: left; position:relative; width:48.7%; padding: 16px; margin-bottom: 16px; background: #FFFFFF;border: 1px solid #D7DBEC; -webkit-border-radius: 8px; border-radius: 8px;}
+.list_barGraph .item{float: left; position:relative; width:48.7%; height: 269px; padding: 16px; margin-bottom: 16px; background: #FFFFFF;border: 1px solid #D7DBEC; -webkit-border-radius: 8px; border-radius: 8px;}
 .list_barGraph .item:nth-child(2n){margin-left:2.6%;}
 .list_barGraph .item_cont .info{margin-bottom: 16px; height: 76px; overflow: hidden;}
-.list_barGraph .item_cont .info + *{width: 100%; height: 143px;}
-[class*="list_"] .normal_abnormal{padding:20px 0; text-align: center;}
-[class*="list_"] .normal_abnormal table{width: 100%; height: 100px;}
-[class*="list_"] .normal_abnormal .normal_info span{display: block; margin:0 auto; width:90%; height:30px; line-height: 30px; -webkit-border-radius: 8px; border-radius: 8px; font-weight: 700; color:#fff; font-size: 12px;}
-[class*="list_"] .normal_abnormal .normal_info.type00 span{background:#7E84A3;}
-[class*="list_"] .normal_abnormal .normal_info.type01 span{background:#F63E3E;}
-[class*="list_"] .normal_abnormal .year{height:30px; line-height: 30px; color: #7E84A3; vertical-align: top;}
-[class*="list_"] .nodata{position:relative; text-align: center; display: table;}
-[class*="list_"] .nodata p{display: table-cell; vertical-align: middle; font-size:15px; font-weight:700; color: #7E84A3;}
-[class*="list_"] .nodata p::before{content: ''; display: block; width: 50px; height: 50px; background: #7E84A3; margin: 0 auto 20px;}
+.list_barGraph .item_cont .info + *{width: 100%;}
+.list_barGraph .item_cont .graph_box{height: 143px;}
+.list_barGraph .item_cont .nodata{height: 143px;}
+.list_barGraph .item_cont .normal_abnormal{padding: 30px 0;}
 .list_barGraph .more_box{position:absolute; right: 16px; top:16px;}
 .list_barGraph .more_box .show_list{right: 0; top:29px;}
 
@@ -211,8 +241,7 @@
 /*검진결과*/
 .patient_info_checkup01 .arrange_tab .colItem{padding:24px;}
 .list_inbody{height: 100%; margin-right: -10px; padding-right: 10px;}
-.list_inbody:after{content: ''; visibility: hidden; display: block; clear: both;}
-.list_inbody .item{float: left; position:relative; width:100%; padding: 24px; padding-right: 58px; margin-bottom: 16px; background: #FFFFFF; border: 1px solid #D7DBEC; -webkit-border-radius: 8px; border-radius: 8px;}
+.list_inbody .item{position:relative; width:100%; padding: 24px; padding-right: 58px; margin-bottom: 16px; background: #FFFFFF; border: 1px solid #D7DBEC; -webkit-border-radius: 8px; border-radius: 8px;}
 .list_inbody .item_cont{display: -webkit-flex; display: -ms-flexbox; display: flex;}
 .list_inbody .info{width: 225px; flex-shrink: 0; flex-basis:225px; margin-right: 10px;}
 .list_inbody .info + *{max-width: 100%; -webkit-box-flex: 1; -ms-flex: 1; flex-grow: 1;}
@@ -223,13 +252,15 @@
 .list_otherMedi_history{height: 100%;}
 
 .patient_info_checkup02 .arrange_tab .colItem{padding:24px;}
-.popup_container.otherMedi_historyDetail{width:613px}
+.popup_container.otherMedi_historyDetail{min-width:613px; max-width: 80%;}
+.popup_container.otherMedi_historyDetail .table_list>table:not(.fixed-table) tr td:not(.tal){white-space: normal;}
+.popup_container.otherMedi_historyDetail .table_list tr td:last-child{text-align: center;}
 .popup_container.otherMedi_historyDetail .popup_body{padding:24px 0 0;}
 
 .patient_info_checkup03 .arrange_tab .colItem{padding:24px;}
 
 .questionnaire_list{padding: 8px;}
-.questionnaire_list li{padding-top:12px; padding-bottom:4px; }
+.questionnaire_list li{margin-bottom: 0; padding-top:12px; padding-bottom:4px; }
 .questionnaire_list li+li{border-top: 1px solid #D7DBEC;}
 .questionnaire_list .tit{margin-bottom: 12px;}
 .questionnaire_list .in_item{margin-bottom: 8px;}
@@ -239,14 +270,14 @@
 .questionnaire_list .in_item:hover >*::before{background-position:-18px -125.3px;}
 
 .list_healthInsurance{height: 100%; margin-right: -10px; padding-right: 10px;}
-.list_healthInsurance:after{content: ''; visibility: hidden; display: block; clear: both;}
-.list_healthInsurance .item{float: left; position:relative; width:100%; padding: 24px; padding-right: 58px; margin-bottom: 16px; background: #FFFFFF; border: 1px solid #D7DBEC; -webkit-border-radius: 8px; border-radius: 8px;}
+.list_healthInsurance .item{position:relative; width:100%; padding: 24px; padding-right: 58px; margin-bottom: 16px; background: #FFFFFF; border: 1px solid #D7DBEC; -webkit-border-radius: 8px; border-radius: 8px;}
 .list_healthInsurance .item .headline07{margin-bottom: 12px; }
 .list_healthInsurance .item_cont{display: -webkit-flex; display: -ms-flexbox; display: flex; padding-bottom:24px;}
 .list_healthInsurance .item_cont+.item_cont{padding-top:24px; border-top: 1px solid #D7DBEC;}
 .list_healthInsurance .item_cont:last-child{padding-bottom: 0;}
 .list_healthInsurance .info{width: 225px; flex-shrink: 0; flex-basis:225px; margin-right: 10px;}
-.list_healthInsurance .info + *{max-width: 100%; -webkit-box-flex: 1; -ms-flex: 1; flex-grow: 1; height: 144px;}
+.list_healthInsurance .info + *{max-width: 100%; -webkit-box-flex: 1; -ms-flex: 1; flex-grow: 1; height: auto;}
+.list_healthInsurance .graph_box{height: 144px;}
 .list_healthInsurance .more_box{position:absolute; right: 16px; top:16px;}
 .list_healthInsurance .more_box .show_list{right: 0; top:29px;}
 
@@ -278,9 +309,13 @@
 .hosinfo{display: -webkit-flex; display: -ms-flexbox; display: flex; flex-wrap: wrap; padding: 48px;}
 .hosinfo .input_listBox{width:47.1%;}
 .hosinfo .input_listBox + .input_listBox{margin-left: 5.6%;}
+.hosInput_list > li{margin-bottom: 0;}
 .hosInput_list > li + li{margin-top: 24px;}
+.hosInput_list.hosInfo_time > li + li{margin-top: 16px;}
 
 .hosInput_list .input_label{width:160px;}
+.hosInput_list .inputList_wrap{-webkit-justify-content:flex-start; justify-content:flex-start;}
+.hosInput_list > li:first-child .inputList_wrap{margin-top: 0;}
 .hosInput_list .textarea{height:166px; padding:10px 4px 10px 16px}
 
 .hos_pic{width: 100%;}
@@ -288,13 +323,14 @@
 .hos_pic .drop_imgBox input{display: none;}
 .hos_pic .drop_imgBox label{display: block; width: 100%;}
 .hos_pic .drop_imgBox .cont_txt02::before{content:''; display: block; width:24px; height:24px; margin:0 auto 8px; background:url(../images/common/common_ico.png)no-repeat -192px -48px; background-size:240px;}
-.hos_pic .drop_imgBox .cont_txt02{padding-top:  99px;}
+.hos_pic .drop_imgBox .cont_txt02{padding-top: 120px;}
 .hos_pic .drop_imgBox .cont_txt02 span{color:#3E88F6;}
 .hos_pic .img_list:after{content:''; display: block; clear: both; visibility: hidden;}
 .hos_pic .img_list li{position:relative; float:left; width:23.75%; margin-bottom: 1.66%; margin-left: 1.66%; height: 64px; background: #F5F6FA;-webkit-border-radius: 4px;border-radius: 4px; overflow: hidden;}
 .hos_pic .img_list li::after{content:''; position: absolute; left: 50%; top: 50%;  display: block; width:24px; height:24px; background:url(../images/common/common_ico.png)no-repeat -192px -48px; background-size:240px;transform:translate(-50%, -50%); -webkit-transform:translate(-50%, -50%); -moz-transform:translate(-50%, -50%); -o-transform:translate(-50%, -50%); -ms-transform:translate(-50%, -50%);}
 .hos_pic .img_list li:nth-child(4n+1){margin-left: 0; }
 .hos_pic .img_list li img{position:relative; display: block; z-index: 5; max-width: 100%; max-height: 100%; width: auto; height: auto; margin:0 auto;}
+.hos_pic .img_list li .img_del{position:absolute; right:5px; top:5px; z-index: 11;}
 
 .hosInput_time{display: -webkit-flex; display: -ms-flexbox; display: flex; align-items: center; width: 100%;}
 .hosInput_time .time_select{width: 100%;}

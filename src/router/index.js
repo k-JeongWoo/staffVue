@@ -4,6 +4,7 @@ import main from '@/router/main'
 import auth from '@/router/auth'
 import member from '@/router/member'
 import hospital from '@/router/hospital'
+import mypage from '@/router/mypage'
 
 Vue.use(Router)
 
@@ -11,7 +12,8 @@ const routes = [
   ...main,
   ...auth,
   ...member,
-  ...hospital
+  ...hospital,
+  ...mypage
 ]
 
 export default new Router({

@@ -2,7 +2,7 @@
   <div class="innerWrap patient_info_health01">
     <div class="top_wrap">
       <h2 class="headline05 fl">
-        <a href="javascript:void(0)" @click="$router.go(-1)"><i class="ico_backKey"></i>환자  상세 정보</a>
+        <i class="ico_backKey"></i>환자 상세 정보
       </h2>
       <!--bxSrchArea //bxSrchArea-->
     </div>
@@ -30,23 +30,20 @@
                     <span class="tit">연락처</span>
                     <span class="cont">{{phoneFomatter(memberInfo.memberHpno)}}</span>
                   </li>
-                  <li>
+<!--                  <li>
                     <p class="tit">키 / 몸무게</p>
                     <p class="cont">170 cm / 65 kg</p>
                   </li>
                   <li class="w100">
                     <span class="tit">가족력</span>
                     <span class="cont">가족력 텍스트 영역입니다.</span>
-                  </li>
+                  </li>-->
                 </ul>
               </dd>
             </dl>
             <div class="acco_box caution">
               <div class="acco_tit on"> <!-- class="on" 추가시 .acco_box display:block 처리 -->
                 <p>주의사항</p>
-                <button type="button" class="btn_ico acco_btn">
-                  <i class="icoarrows_down02">열기</i>
-                </button>
               </div>
               <div class="acco_cont">
                 <p>{{memberInfo.patientDesc}}</p>
@@ -54,17 +51,6 @@
             </div>
           </div>
           <!--//detail_info-->
-
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
-          <div class="btnWrapB">
-            <button type="button" class="btn_ico">
-              <i class="ico_message">메세지</i>
-            </button>
-            <button type="button" class="btn_ico">
-              <i class="ico_del_gray01">삭제</i>
-            </button>
-          </div>
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
         </div>
       </div>
       <!-- //contents중 왼쪽 좁은영역 -->
@@ -126,38 +112,15 @@
 
                 <div class="mint_body">
                   <!-- 글쓰기 경우-->
-                  <div class="mint_textBox" v-if="functionCheckupList.functionDesc === null">
+                  <div class="mint_textBox">
                     <textarea v-model="staffOpinion.staffOpinionDesc"></textarea>
-
                   </div>
                   <!-- 글쓰기 경우-->
-
-                  <!--글 보기 경우-->
-                  <div class="mint_textBox" v-if="functionCheckupList.functionDesc !== null" v-on:click="toggleFunctionOpt = !toggleFunctionOpt">
-                    <div class="view">
-                      <p class="text" style="white-space: pre-line">{{functionCheckupList.functionDesc}}</p>
-
-                      <p class="date">{{functionCheckupList.functionDate}}</p>
-                    </div>
-                  </div>
-                  <!--//글 보기 경우-->
-
-                  <!--show_list-->
-                  <ul class="show_list" :class="{on : toggleFunctionOpt}"
-                      v-if="functionCheckupList.functionDesc !== null">
-                    <li>
-                      <a href="javascript:void(0);" @click="functionCheckupList.functionDesc = null">편집하기</a>
-                    </li>
-<!--                    <li>
-                      <a href="javascript:void(0);" @click="" class="del">삭제하기</a>
-                    </li>-->
-                  </ul>
-                  <!--////show_list-->
                 </div>
 
-                <div class="btnArea" v-if="functionCheckupList.functionDesc === null">
+                <div class="btnArea">
                   <a href="javascript:void(0);" @click="staffOpinionWrite" class="btn_border_color01">
-                    <i class="icoplus_green01">+</i>의견 등록
+                    <i class="icoplus_green01">+</i>{{functionCheckupList.functionDesc === null ? '의견 등록' : '의견 수정'}}
                   </a>
                 </div>
               </div>
@@ -186,17 +149,20 @@
 <!--                      <p class="cont_txt02 color2">최소 기준 값 100~150</p>-->
                     </div>
                       <!--테이블자리-->
-                      <div class="normal_abnormal" v-if="item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB'">
+                      <div class="normal_abnormal" v-show="item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB'">
                         <table v-html="tblOBJ['tbl' + item.checkupDetailItem]" ></table>
                       </div>
                       <!--테이블자리-->
                       <!--그래프자리-->
-                      <div class="graph_box" v-else :id="'chart_' + item.checkupDetailItem"></div>
+                      <div class="graph_box" v-if="item.checkupDetailItem !== 'HEA' && item.checkupDetailItem !== 'PRO' && item.checkupDetailItem !== 'TUB'"
+                           :id="'chart_' + item.checkupDetailItem"></div>
                       <!--그래프자리-->
+                      <div class="graph_box" v-if="item.checkupDetailItem === 'SIG_S' && item.checkupDetailItem === 'TBP_S'"
+                           :id="'chart_' + item.checkupDetailItem"></div>
                   </div>
                   <div class="more_box">
-                    <button type="button" class="btn_ico" @click="careProgramItemToggleArr[index] = !careProgramItemToggleArr[index]; $forceUpdate()"><i class="ico_more_gray">더보기</i></button>
-                    <ul class="show_list " :class="{on: (careProgramItemToggleArr[index])}"><!-- on 클래스 추가시 show_list 보여집니다. -->
+                    <button type="button" class="btn_ico" @click="$forceUpdate()"><i class="ico_more_gray">더보기</i></button>
+                    <ul class="show_list"><!-- on 클래스 추가시 show_list 보여집니다. -->
                       <li>
                         <a href="javascript:void(0);" @click="careProgramItemModalFlag = true" v-on:click="setChartDetail(item)">자세히 보기</a>
                       </li>
@@ -223,7 +189,7 @@
         <div class="popup_container type01 graph_detailPop"> <!--type01은 상단 헤더 있는 popup // type02는 타이틀이 중앙에 위치한-->
           <div class="popup_header">
             <h3>{{careProgramItem[detailItem.itemCode]}}</h3>
-            <button type="button" class="btn_popClose" @click="this.careProgramItemModalFlag = !this.careProgramItemModalFlag">
+            <button type="button" class="btn_popClose" @click="careProgramItemModalFlag = !careProgramItemModalFlag">
               <i class="ico_close_purple_x">닫기</i>
             </button>
           </div>
@@ -232,20 +198,16 @@
               <p class="cont_txt02 color2">{{detailItem.normalValueA}}</p>
 <!--              <p class="cont_txt02 color2">최소 기준 값 100~150</p>-->
             </div>
-            <ul class="graph_list">
+            <ul class="graph_list list_detail">
               <li class="item">
-                <template v-if="detailItem.itemCode === 'HEA' || detailItem.itemCode === 'PRO' || detailItem.itemCode === 'TUB'">
-                  <!--테이블자리-->
-                  <div class="normal_abnormal">
-                    <table v-html="tblOBJ['tbl' + detailItem.itemCode]" ></table>
-                  </div>
-                  <!--테이블자리-->
-                </template>
-                <template v-else>
-                  <!--그래프자리-->
-                  <div class="graph_box" id="chart_detail"></div>
-                  <!--그래프자리-->
-                </template>
+                <!--테이블자리-->
+                <div class="normal_abnormal" v-show="detailItem.itemCode === 'HEA' || detailItem.itemCode === 'PRO' || detailItem.itemCode === 'TUB'">
+                  <table v-html="tblOBJ['tbl' + detailItem.itemCode]" ></table>
+                </div>
+                <!--테이블자리-->
+                <!--그래프자리-->
+                <div class="graph_box" id="chart_detail" v-show="detailItem.itemCode !== 'HEA' && detailItem.itemCode !== 'PRO' && detailItem.itemCode !== 'TUB'"></div>
+                <!--그래프자리-->
 <!--                <p class="graph_legend">Lorem ipsum dolor sit amet</p>-->
               </li>
             </ul>
@@ -346,8 +308,10 @@ export default {
         OST: '골다공증',
         PRO: '요단백',
         SER: '혈청크레아티닌',
-        SIG: '시력(좌/우)',
-        TBP: '혈압(최고/최저)',
+        SIG: '시력(좌)',
+        SIG_S: '시력(우)',
+        TBP: '혈압(최고)',
+        TBP_S: '혈압(최저)',
         TCL: '총콜레스테롤',
         TRI: '중성지방',
         TUB: '폐결핵 흉부질환',
@@ -360,7 +324,6 @@ export default {
         tblPRO: '',
         tblTUB: ''
       },
-      careProgramItemToggleArr: [],
       detailItem: {
         itemCode: '',
         normalValueA: ''
@@ -395,7 +358,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/member/memberDetail`, { params: params })
       res.then(response => {
-        this.memberInfo = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.memberInfo = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) { console.log(error) })
     },
     getFunctionCheckupList: function (careId) {
@@ -405,22 +372,75 @@ export default {
       }
       var res = axios.get(`/api/v1/api/checkupDetail/functionCheckupList`, { params: params })
       res.then(response => {
-        this.functionCheckupList = response.data.data
-        this.staffOpinion.staffOpinionDesc = this.functionCheckupList.functionDesc
+        if (response.data.resultCode === '0000') {
+          this.functionCheckupList = response.data.data
+          this.staffOpinion.staffOpinionDesc = this.functionCheckupList.functionDesc
+
+          let obj = this
+          let subItem = []
+          this.functionCheckupList.responseData.forEach(function (item, idx) {
+            // this.normalValueA[item.checkupDetailItem] = item.normalValueA
+
+            if (item.checkupDetailItem === 'SIG' || item.checkupDetailItem === 'TBP') {
+              let tempItem = {
+                checkupDetailItem: item.checkupDetailItem + '_S',
+                checkupInspectionItems: [],
+                normalValueA: '',
+                normalValueB: '',
+                suspectedDisease: ''
+              }
+              item.checkupInspectionItems.forEach(function (item2, idx) {
+                var itemsplit = item2.checkupDetailResult.split('/')
+                item2.checkupDetailResult = itemsplit[0]
+                tempItem.checkupInspectionItems[idx] = {checkupDetailResult: itemsplit[1], pdCheckupYear: item2.pdCheckupYear}
+              })
+              tempItem['checkupDetailItem'] = item.checkupDetailItem + '_S'
+              tempItem['normalValueA'] = item.normalValueA
+              tempItem['normalValueB'] = item.normalValueB
+              tempItem['suspectedDisease'] = item.suspectedDisease
+              subItem.push(tempItem)
+              obj.functionCheckupList.responseData.push(tempItem)
+              // ['checkupDetailResult'] = checkupDetailResult2
+            } else if (item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB') {
+              var itemsYear = ''
+              var itemsResult = ''
+              item.checkupInspectionItems.forEach(function (item2, idx) {
+                itemsYear += '<td>' + item2.pdCheckupYear + '</td>'
+                let resStyle = ''
+                if (item2.checkupDetailResult === '정상' || item2.checkupDetailResult === '음성' || item2.checkupDetailResult === '정상/정상') {
+                  resStyle = 'type00'
+                } else {
+                  resStyle = 'type01'
+                }
+                itemsResult += '<td class="normal_info ' + resStyle + '"><span>' + item2.checkupDetailResult + '</span></td>'
+              })
+              var tblHtml = '<tr>' + itemsYear + '</tr>' + '<tr>' + itemsResult + '</tr>'
+              if (item.checkupDetailItem === 'HEA') obj.tblOBJ.tblHEA = tblHtml
+              else if (item.checkupDetailItem === 'PRO') obj.tblOBJ.tblPRO = tblHtml
+              else if (item.checkupDetailItem === 'TUB') obj.tblOBJ.tblTUB = tblHtml
+            }
+          })
+          // this.functionCheckupList.responseData.sort()
+          this.functionCheckupList.responseData.map(item => item.checkupDetailItem === 'SIG' || item.checkupDetailItem === 'TBP' ? sortDetailArr(item.checkupDetailItem, this.functionCheckupList) : null)
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) {
         console.log(error)
       }).finally(() => {
-        getChartList(this)
+        this.functionCheckupList.responseData.forEach(function (item) {
+          fnDrawChart(item)
+        })
       })
     },
     setChartDetail: function (item) {
       this.detailItem.itemCode = item.checkupDetailItem
       this.detailItem.normalValueA = item.normalValueA
       this.chartDetailArr.responseData.push(item)
-      getChartList(this)
+      fnDrawChart(item, 'D')
     },
     staffOpinionWrite: function () {
-      if (confirm('주치의 의견을 추가 하시겠습니까?')) {
+      if (confirm('주치의 의견을 작성 하시겠습니까?')) {
         this.staffOpinion.careProgramId = this.functionCheckupList.careProgramId
         var res = axios.post(`/api/v1/api/checkupDetail/staffOpinionWrite`, this.staffOpinion)
         res.then(response => {
@@ -449,7 +469,11 @@ export default {
       // 기능별 건강 항목 조회
       var res = axios.get(`/api/v1/api/checkupDetail/functionItemList`, { params: params })
       res.then(response => {
-        this.funItemList = response.data.data.functionItems
+        if (response.data.resultCode === '0000') {
+          this.funItemList = response.data.data.functionItems
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) {
         console.log(error)
       })
@@ -457,10 +481,14 @@ export default {
       // 환자 - 기능별 건강 항목 조회
       var resSub = axios.get(`/api/v1/api/checkupDetail/functionItemMemberList`, { params: params })
       resSub.then(response => {
-        let checkArr = this.funItemCheckArr
-        response.data.data.forEach(function (item) {
-          checkArr.push(item.functionName)
-        })
+        if (response.data.resultCode === '0000') {
+          let checkArr = this.funItemCheckArr
+          response.data.data.forEach(function (item) {
+            checkArr.push(item.functionName)
+          })
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) {
         console.log(error)
       })
@@ -478,7 +506,7 @@ export default {
           this.getFunctionCheckupList(this.nowSettingCareProId)
           this.functionItemModalToggle()
         } else {
-          alert('설정을 실패하었습니다.')
+          alert(response.data.message)
         }
       }).catch(function (error) { console.log(error) })
     },
@@ -501,91 +529,73 @@ export default {
   }
 }
 
-function getChartList (obj) {
-  let targetDate = null
-  if (obj.careProgramItemModalFlag !== true) {
-    targetDate = obj.functionCheckupList
-  } else {
-    targetDate = obj.chartDetailArr
+function fnDrawChart (item, type) {
+  let targetDOM = 'chart_' + item.checkupDetailItem
+  if (type === 'D') {
+    targetDOM = 'chart_detail'
   }
-  targetDate.responseData.forEach(function (item, idx) {
-    const graphsMode1 = [
-      {
-        'type': 'line',
-        'bullet': 'round',
-        'valueField': 'checkupDetailResult',
-        'fillAlphas': 0
-      }
-    ]
-    const graphsMode2 = [
-      {
-        'type': 'line',
-        'bullet': 'round',
-        'valueField': 'checkupDetailResultSub1',
-        'fillAlphas': 0
+  // eslint-disable-next-line no-undef,no-unused-expressions
+  AmCharts.makeChart(targetDOM,
+    {
+      'type': 'serial',
+      'columnWidth': 0.5,
+      'autoMarginOffset': 4,
+      'marginRight': 0,
+      'marginLeft': 0,
+      'marginBottom': 0,
+      'marginTop': 10,
+      'valueAxes': [{
+        'axisAlpha': 0,
+        'gridAlpha': 0.7,
+        'gridColor': '#D7DBEC',
+        'position': 'left',
+        'color': '#7E84A3',
+        'fontSize': 10,
+        'minimum': 0, // 최소 시작값
+        // 'maximum': 500, // 최대 그리드값
+        'autoGridCount': false, // 라인갯수조정하기위한 gridauto기능 풀어주기
+        'gridCount': 5 // 원하는 라인 갯수
+      }],
+      'categoryField': 'pdCheckupYear',
+      'categoryAxis': {
+        'axisAlpha': 0,
+        'gridAlpha': 0,
+        'color': '#7E84A3',
+        // '#eab144'
+        'fontSize': 14
       },
-      {
-        'type': 'line',
-        'bullet': 'round',
-        'valueField': 'checkupDetailResultSub2',
-        'fillAlphas': 0
-      }
-    ]
-    var graphsMode = graphsMode1
-    if (item.checkupDetailItem === 'SIG' || item.checkupDetailItem === 'TBP') {
-      graphsMode = graphsMode2
-      item.checkupInspectionItems.forEach(function (item2, idx) {
-        var itemsplit = item2.checkupDetailResult.split('/')
-        item2.checkupDetailResultSub1 = itemsplit[0]
-        item2.checkupDetailResultSub2 = itemsplit[1]
-      })
-    } else if (item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB') {
-      var itemsYear = ''
-      var itemsResult = ''
-      item.checkupInspectionItems.forEach(function (item2, idx) {
-        itemsYear += '<td class="year">' + item2.pdCheckupYear + '</td>'
-        let resStyle = ''
-        if (item2.checkupDetailResult === '정상' || item2.checkupDetailResult === '음성' || item2.checkupDetailResult === '정상/정상') {
-          resStyle = 'type00'
-        } else {
-          resStyle = 'type01'
-        }
-        itemsResult += '<td class="normal_info ' + resStyle + '"><span>' + item2.checkupDetailResult + '</span></td>'
-      })
-      var tblHtml = '<tr>' + itemsYear + '</tr>' + '<tr>' + itemsResult + '</tr>'
-      if (item.checkupDetailItem === 'HEA') obj.tblOBJ.tblHEA = tblHtml
-      else if (item.checkupDetailItem === 'PRO') obj.tblOBJ.tblPRO = tblHtml
-      else if (item.checkupDetailItem === 'TUB') obj.tblOBJ.tblTUB = tblHtml
-    }
-
-    if (obj.careProgramItemModalFlag !== true) {
-      /* AmCharts.makeChart('chart_HEI', */
-      // eslint-disable-next-line no-undef,no-unused-expressions
-      AmCharts.makeChart('chart_' + item.checkupDetailItem,
+      'chartCursor': {
+        'zoomable': false
+      },
+      'graphs': [
         {
-          'type': 'serial',
-          'theme': 'none',
-          'categoryField': 'pdCheckupYear',
-          'chartCursor': {},
-          'graphs': graphsMode,
-          'dataProvider': item.checkupInspectionItems
+          'valueField': 'checkupDetailResult',
+          'balloonText': '[[category]]: <b>[[value]]</b>',
+          'type': 'column',
+          'lineAlpha': '0',
+          'fillAlphas': '1',
+          'fillColors': '#60CFE3',
+          'colorField': 'color'
         }
-      )
-    } else {
-      /* AmCharts.makeChart('chart_HEI', */
-      // eslint-disable-next-line no-undef,no-unused-expressions
-      AmCharts.makeChart('chart_detail',
-        {
-          'type': 'serial',
-          'theme': 'none',
-          'categoryField': 'pdCheckupYear',
-          'chartCursor': {},
-          'graphs': graphsMode,
-          'dataProvider': item.checkupInspectionItems
-        }
-      )
+      ],
+      'dataProvider': item.checkupInspectionItems
     }
+  )
+  // eslint-disable-next-line no-undef,no-unused-expressions
+  AmCharts.addInitHandler(function (chart) {
+    chart.dataProvider.forEach(function (item, idx) {
+      item['color'] = idx % 2 === 0 ? '#AF89FF' : '#9792FF'
+    })
   })
+}
+
+function sortDetailArr (item, obj) {
+  const getIdx = obj.responseData.findIndex(i => i.checkupDetailItem === item)
+  const getItem = obj.responseData.splice(getIdx, 1)
+  obj.responseData.splice(0, 0, getItem[0])
+  const getIdxS = obj.responseData.findIndex(i => i.checkupDetailItem === (item + '_S'))
+  const getItemS = obj.responseData.splice(getIdxS, 1)
+  obj.responseData.splice(1, 0, getItemS[0])
 }
 </script>
 

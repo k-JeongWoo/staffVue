@@ -2,7 +2,7 @@
   <div class="innerWrap patient_info_checkup03">
     <div class="top_wrap">
       <h2 class="headline05 fl">
-        <a href="javascript:void(0)" @click="$router.go(-1)"><i class="ico_backKey"></i>환자  상세 정보</a>
+        <i class="ico_backKey"></i>환자 상세 정보
       </h2>
       <!--bxSrchArea //bxSrchArea-->
     </div>
@@ -30,23 +30,20 @@
                     <span class="tit">연락처</span>
                     <span class="cont">{{phoneFomatter(memberInfo.memberHpno)}}</span>
                   </li>
-                  <li>
+<!--                  <li>
                     <p class="tit">키 / 몸무게</p>
                     <p class="cont">170 cm / 65 kg</p>
                   </li>
                   <li class="w100">
                     <span class="tit">가족력</span>
                     <span class="cont">가족력 텍스트 영역입니다.</span>
-                  </li>
+                  </li>-->
                 </ul>
               </dd>
             </dl>
             <div class="acco_box caution">
               <div class="acco_tit on"> <!-- class="on" 추가시 .acco_box display:block 처리 -->
                 <p>주의사항</p>
-                <button type="button" class="btn_ico acco_btn">
-                  <i class="icoarrows_down02">열기</i>
-                </button>
               </div>
               <div class="acco_cont">
                 <p>{{memberInfo.patientDesc}}</p>
@@ -54,17 +51,6 @@
             </div>
           </div>
           <!--//detail_info-->
-
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
-          <div class="btnWrapB">
-            <button type="button" class="btn_ico">
-              <i class="ico_message">메세지</i>
-            </button>
-            <button type="button" class="btn_ico">
-              <i class="ico_del_gray01">삭제</i>
-            </button>
-          </div>
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
         </div>
       </div>
       <!-- //contents중 왼쪽 좁은영역 -->
@@ -108,7 +94,8 @@
             <div class="in_col grow01 ">
               <div class="arrange_row" v-show="checkupDetailList === null" >
                 <div class="in_col grow01 nodata">
-                  <p class="nodata_txt">해당 기능과 연결된 검사 결과가 없습니다.</p>
+                  <p class="nodata_txt" v-if="blankType === 'N'">해당 기능과 연결된 검사 결과가 없습니다.</p>
+                  <p class="nodata_txt" v-if="blankType === 'A'">데이터 동의를 받지 않았습니다.</p>
                 </div>
               </div>
               <ul class="list_healthInsurance " v-show="checkupDetailList !== null">
@@ -160,11 +147,20 @@
                   <h3 class="headline07">시력 검사</h3>
                   <div class="item_cont">
                     <div class="info">
-                      <h4 class="headline08">시력(좌/우)</h4>
+                      <h4 class="headline08">시력(좌)</h4>
                       <p class="cont_txt02 color2">{{normalValueA.SIG}}</p>
                     </div>
                     <!--그래프자리-->
                     <div class="graph_box" id="chart_SIG" ></div>
+                    <!--그래프자리-->
+                  </div>
+                  <div class="item_cont">
+                    <div class="info">
+                      <h4 class="headline08">시력(우)</h4>
+                      <p class="cont_txt02 color2">{{normalValueA.SIG}}</p>
+                    </div>
+                    <!--그래프자리-->
+                    <div class="graph_box" id="chart_SIG_S" ></div>
                     <!--그래프자리-->
                   </div>
                   <!---->
@@ -175,7 +171,6 @@
                   <div class="item_cont">
                     <div class="info">
                       <h4 class="headline08">청력(좌/우)</h4>
-                      <p class="cont_txt02 color2">{{normalValueA.HEA}}</p>
                     </div>
                     <div class="normal_abnormal">
                       <table v-html="tblHEA"></table>
@@ -188,10 +183,16 @@
                   <h3 class="headline07">고혈압 검사</h3>
                   <div class="item_cont">
                     <div class="info">
-                      <h4 class="headline08">혈압(최고/최저)(mmHg)</h4>
+                      <h4 class="headline08">혈압(최고)(mmHg)</h4>
                       <p class="cont_txt02 color2">{{normalValueA.TBP}}</p>
                     </div>
                     <div class="graph_box" id="chart_TBP" ></div>
+                  </div>
+                  <div class="item_cont">
+                    <div class="info">
+                      <h4 class="headline08">혈압(최저)(mmHg)</h4>
+                    </div>
+                    <div class="graph_box" id="chart_TBP_S" ></div>
                   </div>
                   <!---->
                 </li>
@@ -344,72 +345,6 @@
             <!-- in_col 오른쪽 넓은영역중 왼쪽영역 :: w256-->
             <div class="in_col w256">
               <ul class="questionnaire_list">
-<!--                <li>
-                  <h4 class="tit">2021 chronic kidney disease</h4>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 건강보험관리공단 자궁경부암 문진표
-                    </a>
-                  </p>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 건강보험관리공단 문진표
-                    </a>
-                  </p>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 건강보험관리공단 문진표
-                    </a>
-                  </p>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 건강보험관리공단 문진표
-                    </a>
-                  </p>
-                </li>
-                &lt;!&ndash;&ndash;&gt;
-                <li>
-                  <h4 class="tit">2019 chronic kidney disease</h4>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 questionnaire
-                    </a>
-                  </p>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 results
-                    </a>
-                  </p>
-                </li>
-                &lt;!&ndash;&ndash;&gt;
-                <li>
-                  <h4 class="tit">2015 chronic kidney disease</h4>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 questionnaire
-                    </a>
-                  </p>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 results
-                    </a>
-                  </p>
-                </li>
-                &lt;!&ndash;&ndash;&gt;
-                <li>
-                  <h4 class="tit">2013 chronic kidney disease</h4>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 questionnaire
-                    </a>
-                  </p>
-                  <p class="in_item">
-                    <a href="#">
-                      2021 results
-                    </a>
-                  </p>
-                </li>-->
-                <!---->
                 <li v-for="(item, index) in checkupDocList">
                   <h4 class="tit">{{item.pdCheckupTitle}}</h4>
                   <p class="in_item" v-for="(itemSub, indexSub) in item.checkupMasterDocTypeResponses">
@@ -445,10 +380,12 @@ export default {
       memberId: this.$route.query.memberId,
       memberInfo: null,
       checkupDetailList: null,
+      checkupDetailListS: null,
       checkupDocList: [],
       tblHEA: '',
       tblPRO: '',
       tblTUB: '',
+      blankType: null,
       selCheckupYear: {year: '', diagnosis: ''},
       normalValueA: {}
     }
@@ -456,10 +393,11 @@ export default {
   mounted: function () {
     this.getMemberInfo()
     this.getCheckupDocList()
+    this.drawChart()
     this.phoneFomatter = neoMethod.phoneFomatter
     this.dateFomatter = neoMethod.dateFomatter
     this.ageConvert = neoMethod.ageConvert
-    getChartList(this)
+    // getChartList(this)
   },
   methods: {
     getMemberInfo: function () {
@@ -468,7 +406,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/member/memberDetail`, {params: params})
       res.then(response => {
-        this.memberInfo = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.memberInfo = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) {
         console.log(error)
       })
@@ -479,7 +421,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/checkup/checkupDocList`, {params: params})
       res.then(response => {
-        this.checkupDocList = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.checkupDocList = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) {
         console.log(error)
       })
@@ -487,91 +433,117 @@ export default {
     popUpPDF: function (checkupMasterId) {
       let routeData = this.$router.resolve({name: 'pdfview', query: {checkupMasterId: checkupMasterId, memberId: this.memberId}})
       window.open(routeData.href, '_blank')
+    },
+    drawChart: function () {
+      var params = {
+        memberId: this.memberId,
+        searchYear: dayjs().year()
+      }
+      let obj = this
+      let subItem = []
+      var res = axios.get(`/api/v1/api/checkupDetail/checkupDetailList`, {params: params})
+      res.then(response => {
+        this.checkupDetailList = response.data.data
+        this.checkupDetailList.forEach(function (item, idx) {
+          obj.normalValueA[item.checkupDetailItem] = item.normalValueA
+
+          if (item.checkupDetailItem === 'SIG' || item.checkupDetailItem === 'TBP') {
+            let tempItem = {
+              checkupDetailItem: item.checkupDetailItem + '_S',
+              checkupInspectionItems: []
+            }
+            item.checkupInspectionItems.forEach(function (item2, idx) {
+              var itemsplit = item2.checkupDetailResult.split('/')
+              item2.checkupDetailResult = itemsplit[0]
+              tempItem.checkupInspectionItems[idx] = {checkupDetailResult: itemsplit[1], pdCheckupYear: item2.pdCheckupYear}
+            })
+            tempItem['checkupDetailItem'] = item.checkupDetailItem + '_S'
+            subItem.push(tempItem)
+            // ['checkupDetailResult'] = checkupDetailResult2
+          } else if (item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB') {
+            var itemsYear = ''
+            var itemsResult = ''
+            item.checkupInspectionItems.forEach(function (item2, idx) {
+              itemsYear += '<td>' + item2.pdCheckupYear + '</td>'
+              let resStyle = ''
+              if (item2.checkupDetailResult === '정상' || item2.checkupDetailResult === '음성' || item2.checkupDetailResult === '정상/정상') {
+                resStyle = 'type00'
+              } else {
+                resStyle = 'type01'
+              }
+              itemsResult += '<td class="normal_info ' + resStyle + '"><span>' + item2.checkupDetailResult + '</span></td>'
+            })
+            var tblHtml = '<tr>' + itemsYear + '</tr>' + '<tr>' + itemsResult + '</tr>'
+            if (item.checkupDetailItem === 'HEA') obj.tblHEA = tblHtml
+            else if (item.checkupDetailItem === 'PRO') obj.tblPRO = tblHtml
+            else if (item.checkupDetailItem === 'TUB') obj.tblTUB = tblHtml
+          }
+          fnDrawChart(item)
+        })
+      }).catch(function (error) {
+        console.log(error)
+      }).finally(function () {
+        subItem.forEach(function (item) {
+          fnDrawChart(item)
+        })
+      })
     }
   }
 }
 
-function getChartList (obj) {
-  var params = {
-    memberId: obj.memberId,
-    searchYear: dayjs().year()
-  }
-  var res = axios.get(`/api/v1/api/checkupDetail/checkupDetailList`, {params: params})
-  res.then(response => {
-    if (response.data.status === 9999) {
-      alert(response.data.message)
-    } else {
-      obj.checkupDetailList = response.data.data
-      var dataList = obj.checkupDetailList
-      dataList.forEach(function (item, idx) {
-        const graphsMode1 = [
-          {
-            'type': 'line',
-            'bullet': 'round',
-            'valueField': 'checkupDetailResult',
-            'fillAlphas': 0
-          }
-        ]
-        const graphsMode2 = [
-          {
-            'type': 'line',
-            'bullet': 'round',
-            'valueField': 'checkupDetailResultSub1',
-            'fillAlphas': 0
-          },
-          {
-            'type': 'line',
-            'bullet': 'round',
-            'valueField': 'checkupDetailResultSub2',
-            'fillAlphas': 0
-          }
-        ]
-        var graphsMode = graphsMode1
-
-        obj.normalValueA[item.checkupDetailItem] = item.normalValueA
-
-        if (item.checkupDetailItem === 'SIG' || item.checkupDetailItem === 'TBP') {
-          graphsMode = graphsMode2
-          item.checkupInspectionItems.forEach(function (item2, idx) {
-            var itemsplit = item2.checkupDetailResult.split('/')
-            item2.checkupDetailResultSub1 = itemsplit[0]
-            item2.checkupDetailResultSub2 = itemsplit[1]
-          })
-        } else if (item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB') {
-          var itemsYear = ''
-          var itemsResult = ''
-          item.checkupInspectionItems.forEach(function (item2, idx) {
-            itemsYear += '<td>' + item2.pdCheckupYear + '</td>'
-            let resStyle = ''
-            if (item2.checkupDetailResult === '정상' || item2.checkupDetailResult === '음성' || item2.checkupDetailResult === '정상/정상') {
-              resStyle = 'type00'
-            } else {
-              resStyle = 'type01'
-            }
-            itemsResult += '<td class="normal_info ' + resStyle + '"><span>' + item2.checkupDetailResult + '</span></td>'
-          })
-          var tblHtml = '<tr>' + itemsYear + '</tr>' + '<tr>' + itemsResult + '</tr>'
-          if (item.checkupDetailItem === 'HEA') obj.tblHEA = tblHtml
-          else if (item.checkupDetailItem === 'PRO') obj.tblPRO = tblHtml
-          else if (item.checkupDetailItem === 'TUB') obj.tblTUB = tblHtml
+function fnDrawChart (item) {
+  // eslint-disable-next-line no-undef,no-unused-expressions
+  AmCharts.makeChart('chart_' + item.checkupDetailItem,
+    {
+      'type': 'serial',
+      'columnWidth': 0.5,
+      'autoMarginOffset': 4,
+      'marginRight': 0,
+      'marginLeft': 0,
+      'marginBottom': 0,
+      'marginTop': 10,
+      'valueAxes': [{
+        'axisAlpha': 0,
+        'gridAlpha': 0.7,
+        'gridColor': '#D7DBEC',
+        'position': 'left',
+        'color': '#7E84A3',
+        'fontSize': 10,
+        'minimum': 0, // 최소 시작값
+        // 'maximum': 500, // 최대 그리드값
+        'autoGridCount': false, // 라인갯수조정하기위한 gridauto기능 풀어주기
+        'gridCount': 5 // 원하는 라인 갯수
+      }],
+      'categoryField': 'pdCheckupYear',
+      'categoryAxis': {
+        'axisAlpha': 0,
+        'gridAlpha': 0,
+        'color': '#7E84A3',
+        // '#eab144'
+        'fontSize': 14
+      },
+      'chartCursor': {
+        'zoomable': false
+      },
+      'graphs': [
+        {
+          'valueField': 'checkupDetailResult',
+          'balloonText': '[[category]]: <b>[[value]]</b>',
+          'type': 'column',
+          'lineAlpha': '0',
+          'fillAlphas': '1',
+          'fillColors': '#60CFE3',
+          'colorField': 'color'
         }
-
-        /* AmCharts.makeChart('chart_HEI', */
-        // eslint-disable-next-line no-undef,no-unused-expressions
-        AmCharts.makeChart('chart_' + item.checkupDetailItem,
-          {
-            'type': 'serial',
-            'theme': 'none',
-            'categoryField': 'pdCheckupYear',
-            'chartCursor': {},
-            'graphs': graphsMode,
-            'dataProvider': item.checkupInspectionItems
-          }
-        )
-      })
+      ],
+      'dataProvider': item.checkupInspectionItems
     }
-  }).catch(function (error) {
-    console.log(error)
+  )
+  // eslint-disable-next-line no-undef,no-unused-expressions
+  AmCharts.addInitHandler(function (chart) {
+    chart.dataProvider.forEach(function (item, idx) {
+      item['color'] = idx % 2 === 0 ? '#AF89FF' : '#9792FF'
+    })
   })
 }
 </script>

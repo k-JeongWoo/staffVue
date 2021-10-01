@@ -2,7 +2,7 @@
   <div class="innerWrap patient_info_diagnosis01">
     <div class="top_wrap">
       <h2 class="headline05 fl">
-        <a href="javascript:void(0)" @click="$router.go(-1)"><i class="ico_backKey"></i>환자  상세 정보</a>
+        <i class="ico_backKey"></i>환자 상세 정보
       </h2>
       <!--bxSrchArea //bxSrchArea-->
     </div>
@@ -30,23 +30,20 @@
                     <span class="tit">연락처</span>
                     <span class="cont">{{phoneFomatter(memberInfo.memberHpno)}}</span>
                   </li>
-                  <li>
+<!--                  <li>
                     <p class="tit">키 / 몸무게</p>
                     <p class="cont">170 cm / 65 kg</p>
                   </li>
                   <li class="w100">
                     <span class="tit">가족력</span>
                     <span class="cont">가족력 텍스트 영역입니다.</span>
-                  </li>
+                  </li>-->
                 </ul>
               </dd>
             </dl>
             <div class="acco_box caution">
               <div class="acco_tit on"> <!-- class="on" 추가시 .acco_box display:block 처리 -->
                 <p>주의사항</p>
-                <button type="button" class="btn_ico acco_btn">
-                  <i class="icoarrows_down02">열기</i>
-                </button>
               </div>
               <div class="acco_cont">
                 <p style="white-space: pre-line">{{memberInfo.patientDesc}}</p>
@@ -54,17 +51,6 @@
             </div>
           </div>
           <!--//detail_info-->
-
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
-          <div class="btnWrapB">
-            <button type="button" class="btn_ico">
-              <i class="ico_message">메세지</i>
-            </button>
-            <button type="button" class="btn_ico">
-              <i class="ico_del_gray01">삭제</i>
-            </button>
-          </div>
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
         </div>
       </div>
       <!-- //contents중 왼쪽 좁은영역 -->
@@ -102,9 +88,9 @@
                     <p class="type">{{item.magementPlanType}}</p>
                     <p class="plan">{{item.magementPlayDesc}}</p>
                     <p class="dateTiem">{{item.visitDate}} {{item.visitTime}}</p>
-                    <p class="ddaylabel">D-<span>{{item.ddays === 0 ? 'day' : item.ddays}}</span></p>
+                    <p class="ddaylabel">{{item.ddays === 0 ? 'To' : 'D-'}}<span>{{item.ddays === 0 ? 'day' : item.ddays}}</span></p>
                     <!--show_list-->
-                    <ul class="show_list" :class="{on: (magementPlanListToggleArr[index])}"><!-- on 클래스 추가시 show_list 보여집니다. -->
+                    <ul class="show_list" :ref="'planToggle' + index"><!-- on 클래스 추가시 show_list 보여집니다. -->
                       <li>
                         <a href="javascript:void(0)" @click="openModifyMagementPlan(item)">편집하기</a>
                       </li>
@@ -135,7 +121,7 @@
               <div class="listPager_area">
                 <div class="fixed-table-container table_accordion">
                   <div class="fixed-table-header-bg"></div>
-                  <div class="fixed-table-wrapper table_list scrollArea">
+                  <div class="fixed-table-wrapper table_list scrollArea" ref="clnList">
                     <table class="fixed-table">
                       <colgroup>
                         <col style="width:100px;">
@@ -146,7 +132,7 @@
                       </colgroup>
                       <thead>
                       <tr>
-                        <th style="width:100px"><div class="th-text">날짜<button type="button" class="btn_ico"><i class="icoarrows_down04"></i><!--<i class="icoarrows_up04"></i>--></button></div></th>
+                        <th style="width:100px"><div class="th-text">날짜</div></th>
                         <th style="width:10%"><div class="th-text">종류</div></th>
                         <th style="width:40%"><div class="th-text">진료기록</div></th>
                         <th style="width:40%"><div class="th-text">주의사항</div></th>
@@ -182,12 +168,12 @@
                                   <td>{{item.clinicStepMission}} 걸음</td>
                                 </tr>
                                 <tr>
-                                  <th>운동코칭</th>
-                                  <td style="white-space: pre-line">{{item.clinicCoaching}}</td>
-                                </tr>
-                                <tr>
                                   <th>진료기록</th>
                                   <td style="white-space: pre-line">{{item.clinicRecord}}</td>
+                                </tr>
+                                <tr>
+                                  <th>운동코칭</th>
+                                  <td style="white-space: pre-line">{{item.clinicCoaching}}</td>
                                 </tr>
                                 <tr>
                                   <th>주의사항</th>
@@ -201,9 +187,8 @@
                               </table>
                               <!--more_box-->
                               <div class="more_box">
-                                <button type="button" class="btn_ico"
-                                        @click="clinicListOptionToggle(index)"><i class="ico_more_gray">더보기</i></button>
-                                <ul class="show_list " :class="{on: (clinicListOptToggleArr[index])}" ><!-- on 클래스 추가시 show_list 보여집니다. -->
+                                <button type="button" class="btn_ico"><i class="ico_more_gray">더보기</i></button>
+                                <ul class="show_list" ><!-- on 클래스 추가시 show_list 보여집니다. -->
                                   <li>
                                     <a href="javascript:void(0)" @click="openModifyClinic(item)">편집하기</a>
                                   </li>
@@ -247,8 +232,8 @@
                     </button>
                   </p>
                   <p class="fr">
-                    <button type="button" class="btn_float">
-                      <span class="txt" @click="clinicModalToggle"><i class="ico_bigAdd"></i>진료기록 추가</span>
+                    <button type="button" class="btn_float" @click="clinicModalToggle">
+                      <span class="txt"><i class="ico_bigAdd"></i>진료기록 추가</span>
                     </button>
                   </p>
                 </div>
@@ -303,7 +288,7 @@
                 <div class="inputWrap">
                   <div class="input date">
 <!--                    <input type="text" class="dateInput_green" value="17/05/2012">-->
-                    <datepicker format="yyyy-MM-dd" v-model="planModal.magementPlanVisitDate" :language="languages['ko']" placeholder="Select Date"></datepicker>
+                    <datepicker format="yyyy-MM-dd" v-model="planModal.magementPlanVisitDate" :language="languages['ko']" :disabledDates="disabledDates" placeholder="Select Date"></datepicker>
                   </div>
                   <div class="select typeA">
                     <div class="selectbox " :class="{on : toggleMeridiem}" v-on:click="toggleMeridiem = !toggleMeridiem; toggleTimePicker = false"><!-- on 클래스 추가시 .select_options display:block-->
@@ -311,8 +296,8 @@
                         <span>{{planModal.meridiem === '오전' ? '오전' : '오후'}}</span>
                       </button>
                       <ul class="select_options">
-                        <li class="select_option" :class="{on : (planModal.meridiem === '오전')}" v-on:click="planModal.meridiem = '오전'; planModal.selectTime = '00:00'">오전</li> <!-- on 클래스 추가시 active-->
-                        <li class="select_option" :class="{on : (planModal.meridiem === '오후')}" v-on:click="planModal.meridiem = '오후'; planModal.selectTime = '01:00'">오후</li>
+                        <li class="select_option" :class="{on : (planModal.meridiem === '오전')}" v-on:click="planModal.meridiem = '오전';">오전</li> <!-- on 클래스 추가시 active-->
+                        <li class="select_option" :class="{on : (planModal.meridiem === '오후')}" v-on:click="planModal.meridiem = '오후';">오후</li>
                       </ul>
                     </div>
                   </div>
@@ -322,10 +307,10 @@
                         <span>{{planModal.selectTime}}</span>
                       </button>
                       <ul class="select_options">
-                        <li class="select_option" v-for="(n, timeCnt) in 24"
-                            :class="{on : timePickerSetArr[planModal.meridiem === '오전' ? timeCnt : timeCnt + 2] == planModal.selectTime}"
-                            v-on:click="planModal.selectTime = timePickerSetArr[planModal.meridiem === '오전' ? timeCnt : timeCnt + 2]">
-                          {{timePickerSetArr[planModal.meridiem === '오전' ? timeCnt : timeCnt + 2]}}
+                        <li class="select_option" v-for="item in timePickerSetArr"
+                            :class="{on : planModal.selectTime == item}"
+                            v-on:click="planModal.selectTime = item">
+                          {{item}}
                         </li>
 <!--                        <li class="select_option">09:00</li> &lt;!&ndash; on 클래스 추가시 active&ndash;&gt;-->
                       </ul>
@@ -389,15 +374,15 @@
                 </div>
               </li>
               <li class="inputList_wrap">
-                <p class="input_label ">운동코칭</p>
-                <div class="textarea">
-                  <textarea v-model="clinicModal.clinicCoaching"></textarea>
-                </div>
-              </li>
-              <li class="inputList_wrap">
                 <p class="input_label ">진료기록</p>
                 <div class="textarea">
                   <textarea v-model="clinicModal.clinicRecord"></textarea>
+                </div>
+              </li>
+              <li class="inputList_wrap">
+                <p class="input_label ">운동코칭</p>
+                <div class="textarea">
+                  <textarea v-model="clinicModal.clinicCoaching"></textarea>
                 </div>
               </li>
               <li class="inputList_wrap">
@@ -408,7 +393,7 @@
               </li>
               <li class="inputList_wrap">
                 <p class="input_label ">다음 방문일</p>
-                <div class="input date w03">
+                <div class="input date w03 fixDate">
 <!--                  <input type="text" class="dateInput_purple" value="17/05/2012">-->
                   <datepicker format="yyyy-MM-dd" v-model="clinicModal.clinicNextvisit" :language="languages['ko']" placeholder="Select Date"></datepicker>
                 </div>
@@ -439,7 +424,6 @@ export default {
       memberId: this.$route.query.memberId,
       memberInfo: null,
       magementPlanList: null,
-      magementPlanListToggleArr: [],
       clinicList: null,
       clinicListToggleArr: [],
       clinicListOptToggleArr: [],
@@ -450,8 +434,8 @@ export default {
         meridiem: '오전',
         timeAmPm: '',
         magementPlanVisitDate: new Date(Date.now() + (3600 * 1000 * 24)),
-        selectTime: '00:00',
-        magementPlanVisitTime: '00:00'
+        selectTime: '선택',
+        magementPlanVisitTime: '선택'
       },
       planModal: {
         magementPlanType: 'T',
@@ -459,10 +443,18 @@ export default {
         meridiem: '오전',
         timeAmPm: '',
         magementPlanVisitDate: new Date(Date.now() + (3600 * 1000 * 24)),
-        selectTime: '00:00',
-        magementPlanVisitTime: '00:00'
+        selectTime: '선택',
+        magementPlanVisitTime: '선택'
       },
       clinicModal: {
+        clinicType: 'T',
+        clinicStepMission: '',
+        clinicCoaching: '',
+        clinicRecord: '',
+        clinicCaution: '',
+        clinicNextvisit: new Date(Date.now() + (3600 * 1000 * 24))
+      },
+      clinicModModal: {
         clinicType: 'T',
         clinicStepMission: '',
         clinicCoaching: '',
@@ -486,6 +478,9 @@ export default {
         last: 1,
         totalPages: 1,
         pages: []
+      },
+      disabledDates: {
+        to: new Date()
       }
     }
   },
@@ -500,9 +495,14 @@ export default {
     this.dateFomatter = neoMethod.dateFomatter
     this.ageConvert = neoMethod.ageConvert
     // timePicker Setting
-    this.timePickerSetArr.push()
-    for (var timeCnt = 0; timeCnt < 26; timeCnt++) {
-      var timeSet = (Math.floor(timeCnt / 2) < 10 ? '0' + Math.floor(timeCnt / 2) : Math.floor(timeCnt / 2)) + ':' + (timeCnt % 2 === 0 ? '00' : '30')
+    let timeSet = ''
+    let timeCnt = 0
+    for (timeCnt; timeCnt < 24; timeCnt++) {
+      if (timeCnt < 2) {
+        timeSet = (Math.floor(timeCnt / 2) < 10 ? '12' : Math.floor(timeCnt / 2)) + ':' + (timeCnt % 2 === 0 ? '00' : '30')
+      } else {
+        timeSet = (Math.floor(timeCnt / 2) < 10 ? '0' + Math.floor(timeCnt / 2) : Math.floor(timeCnt / 2)) + ':' + (timeCnt % 2 === 0 ? '00' : '30')
+      }
       this.timePickerSetArr.push(timeSet)
     }
     // {{Math.floor(timeCnt/2) < 10 ? '0' + Math.floor(timeCnt/2) : Math.floor(timeCnt/2)}}:{{timeCnt%2 == 0 ? '00' : '30'}}
@@ -536,7 +536,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/member/memberDetail`, { params: params })
       res.then(response => {
-        this.memberInfo = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.memberInfo = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) { console.log(error) })
     },
     getMagementPlanList: function () {
@@ -545,7 +549,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/hospital/magementPlanList`, { params: params })
       res.then(response => {
-        this.magementPlanList = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.magementPlanList = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) { console.log(error) })
     },
     writeMagementPlan: function () {
@@ -553,12 +561,14 @@ export default {
         this.planModal.memberId = this.memberId
         this.planModal.magementPlanVisitTime = this.planModal.selectTime
         this.planModal.magementPlanVisitDate = this.dateFomatter(this.planModal.magementPlanVisitDate)
-        this.planModal.timeAmPm = this.planModal.meridiem === '로전' ? 'A' : 'P'
+        this.planModal.timeAmPm = this.planModal.meridiem === '오전' ? 'A' : 'P'
         var res = axios.post(`/api/v1/api/hospital/magementPlanWrite`, this.planModal)
         res.then(response => {
           if (response.data.resultCode === '0000') {
             alert('등록이 완료되었습니다.')
             this.getMagementPlanList()
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) { console.log(error) })
         this.planModalReset()
@@ -566,7 +576,6 @@ export default {
       }
     },
     openModifyMagementPlan: function (obj) {
-      console.log(obj)
       this.planModModal = obj
       this.actionPlanFlag = 'U'
       // this.planModal = obj
@@ -579,7 +588,6 @@ export default {
         this.planModal.magementPlanType = 'D'
       }
       this.planModal.magementPlayDesc = this.planModModal.magementPlayDesc
-      console.log(this.planModal.magementPlayDesc)
       this.planModal.magementPlanVisitDate = obj.visitDate
       this.planModal.selectTime = obj.visitTimeAmPm
       this.planModal.meridiem = obj.timeAmPm
@@ -593,10 +601,11 @@ export default {
         this.planModal.timeAmPm = this.planModal.meridiem === '오전' ? 'A' : 'P'
         var res = axios.post(`/api/v1/api/hospital/magementPlanUpdate`, this.planModal)
         res.then(response => {
-          console.log(response)
           if (response.data.resultCode === '0000') {
             alert('수정이 완료되었습니다.')
             this.getMagementPlanList()
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) {
           console.log(error)
@@ -608,13 +617,17 @@ export default {
     removeMagementPlan: function (idx) {
       if (confirm('관리계획을 삭제 하시겠습니까?')) {
         var param = {
+          memberId: this.memberId,
           magementPlanId: idx
         }
         var res = axios.post(`/api/v1/api/hospital/magementPlanDelete`, param)
         res.then(response => {
+          console.log(response)
           if (response.data.resultCode === '0000') {
             alert('삭제가 완료되었습니다.')
             this.getMagementPlanList()
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) { console.log(error) })
       }
@@ -629,43 +642,54 @@ export default {
       }
       var res = axios.get(`/api/v1/api/clinic/clinicList`, { params: params })
       res.then(response => {
-        this.clinicList = response.data.data.content
-        this.pageInfo.totalPages = response.data.data.totalPages
-        this.pageInfo.last = response.data.data.totalPages
-        // 페이징 배열 생성
-        obj.pageInfo.pages = []
-        let pageCnt = Math.ceil(response.data.data.totalElements / obj.pageInfo.perPageCnt)
-        for (let index = 1; index <= pageCnt; index++) {
-          obj.pageInfo.pages.push(index)
+        if (response.data.resultCode === '0000') {
+          this.clinicList = response.data.data.content
+          this.pageInfo.totalPages = response.data.data.totalPages
+          this.pageInfo.last = response.data.data.totalPages
+          this.$refs.clnList.scrollTop = 0
+          // 페이징 배열 생성
+          obj.pageInfo.pages = []
+          let pageCnt = Math.ceil(response.data.data.totalElements / obj.pageInfo.perPageCnt)
+          for (let index = 1; index <= pageCnt; index++) {
+            obj.pageInfo.pages.push(index)
+          }
+        } else {
+          alert(response.data.message)
         }
       }).catch(function (error) { console.log(error) })
     },
     writeClinicPlan: function () {
-      if (confirm('진료기록을 추가 하시겠습니까?')) {
-        this.clinicModal.memberId = this.memberId
-        this.clinicModal.clinicNextvisit = this.dateFomatter(this.clinicModal.clinicNextvisit)
-        var res = axios.post(`/api/v1/api/clinic/clinicWrite`, this.clinicModal)
-        res.then(response => {
-          if (response.data.resultCode === '0000') {
-            alert('등록이 완료되었습니다.')
-            this.getClinicList(this)
-          }
-        }).catch(function (error) { console.log(error) })
-        this.clinicModalReset()
-        this.clinicModalFlag = false
+      if (this.clinicModal.clinicRecord.trim() === '') {
+        alert('진료기록을 입력해 주세요.')
+      } else {
+        if (confirm('진료기록을 추가 하시겠습니까?')) {
+          this.clinicModal.memberId = this.memberId
+          this.clinicModal.clinicNextvisit = this.dateFomatter(this.clinicModal.clinicNextvisit)
+          var res = axios.post(`/api/v1/api/clinic/clinicWrite`, this.clinicModal)
+          res.then(response => {
+            if (response.data.resultCode === '0000') {
+              alert('등록이 완료되었습니다.')
+              this.getClinicList(this)
+            } else {
+              alert(response.data.message)
+            }
+          }).catch(function (error) { console.log(error) })
+          this.clinicModalReset()
+          this.clinicModalFlag = false
+        }
       }
     },
     openModifyClinic: function (obj) {
       this.actionClinicFlag = 'U'
-      this.clinicModal = obj
-      if (obj.clinicType === '치료') {
+      this.clinicModModal = obj
+      if (this.clinicModModal === '치료') {
         this.clinicModal.clinicType = 'T'
-      } else if (obj.clinicType === '검사') {
+      } else if (this.clinicModModal === '검사') {
         this.clinicModal.clinicType = 'E'
       } else {
         this.clinicModal.clinicType = 'D'
       }
-      this.clinicModal.clinicNextvisit = obj.clinicNextvisit
+      this.clinicModal.clinicNextvisit = this.clinicModModal.clinicNextvisit
       this.clinicModalToggle()
     },
     modifyClinic: function () {
@@ -677,6 +701,8 @@ export default {
           if (response.data.resultCode === '0000') {
             alert('수정이 완료되었습니다.')
             this.getClinicList(this)
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) {
           console.log(error)
@@ -696,6 +722,8 @@ export default {
           if (response.data.resultCode === '0000') {
             alert('삭제가 완료되었습니다.')
             this.getClinicList(this)
+          } else {
+            alert(response.data.message)
           }
         }).catch(function (error) { console.log(error) })
       }
@@ -712,13 +740,10 @@ export default {
       this.clinicListToggleArr[idx] = !this.clinicListToggleArr[idx]
       this.$forceUpdate() // 다시 렌더링 하는 방법
     },
-    clinicListOptionToggle: function (idx) {
-      this.clinicListOptToggleArr[idx] = !this.clinicListOptToggleArr[idx]
-      this.$forceUpdate() // 다시 렌더링 하는 방법
-    },
     planListOptionToggle: function (idx) {
-      this.magementPlanListToggleArr[idx] = !this.magementPlanListToggleArr[idx]
-      this.$forceUpdate() // 다시 렌더링 하는 방법
+      this.$refs['planToggle' + idx][0].classList.add('on')
+      // this.magementPlanListToggleArr[idx] = !this.magementPlanListToggleArr[idx]
+      // this.$forceUpdate() // 다시 렌더링 하는 방법
     },
     isFirstOrLast: function (boolean) {
       return boolean ? 'disabled' : ''

@@ -1,4 +1,5 @@
 <template>
+
   <div class="innerWrap hospital_info_inquiry">
     <div class="top_wrap">
       <h2 class="headline05 fl">병원 정보 설정</h2>
@@ -19,7 +20,7 @@
                   <p class="input_label">병원명</p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="" value="씨젠 클리닉 (부속의원)">
                     </p>
                   </div>
                 </div>
@@ -39,7 +40,7 @@
                   <p class="input_label"></p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="" value="서울시 송파구 오금로 15길 5, 송파빌딩 2, 3층">
                     </p>
                   </div>
                 </div>
@@ -47,10 +48,10 @@
               <!---->
               <li>
                 <div class="inputList_wrap">
-                  <p class="input_label">병원명</p>
+                  <p class="input_label">전화번호</p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="" value="02-2195-3400">
                     </p>
                   </div>
                 </div>
@@ -61,7 +62,7 @@
                   <p class="input_label">진료과목</p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="예시) 가정의학과" :value="'통합기능의학, 만성피로, 스트레스, 항노화프로그램, 대사질환, 면역'">
                     </p>
                   </div>
                 </div>
@@ -72,7 +73,7 @@
                   <p class="input_label">진료항목</p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="예시) 호흡기 질환, 내분비, 알레르기" value="치료, 검사, 예방접종">
                     </p>
                   </div>
                 </div>
@@ -83,12 +84,12 @@
                   <p class="input_label">의료장비</p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="의료장비명" :value="'초음파기'">
                     </p>
                     <div class="select typeA wSmall">
                       <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                         <button type="button" class="select_title tac">
-                          3
+                          1
                         </button>
                         <ul class="select_options">
                           <li class="select_option">1</li>
@@ -101,18 +102,23 @@
                         </ul>
                       </div>
                     </div>
+                    <!-- [추가] 20210819 삭제버튼추가-->
+                    <button type="button" class="ml2">
+                      <i class="ico_del_small">삭제</i>
+                    </button>
+                    <!-- //[추가] 20210819 삭제버튼추가-->
                   </div>
                 </div>
                 <div class="inputList_wrap">
                   <p class="input_label"></p>
                   <div class="inputWrap">
                     <p class="input ">
-                      <input type="text" placeholder="">
+                      <input type="text" placeholder="의료장비명" :value="'셀포톤'">
                     </p>
                     <div class="select typeA wSmall">
                       <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                         <button type="button" class="select_title tac">
-                          3
+                          1
                         </button>
                         <ul class="select_options">
                           <li class="select_option">1</li>
@@ -125,12 +131,46 @@
                         </ul>
                       </div>
                     </div>
+                    <!-- [추가] 20210819 삭제버튼추가-->
+                    <button type="button" class="ml2">
+                      <i class="ico_del_small">삭제</i>
+                    </button>
+                    <!-- //[추가] 20210819 삭제버튼추가-->
                   </div>
                 </div>
                 <div class="inputList_wrap">
                   <p class="input_label"></p>
                   <div class="inputWrap">
-                    <button type="button" class="btn_text"><i class="icoplus_green01"></i>장비 추가하기</button>
+                    <p class="input ">
+                      <input type="text" placeholder="의료장비명" :value="'인바디'">
+                    </p>
+                    <div class="select typeA wSmall">
+                      <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
+                        <button type="button" class="select_title tac">
+                          1
+                        </button>
+                        <ul class="select_options">
+                          <li class="select_option">1</li>
+                          <li class="select_option">2</li>
+                          <li class="select_option on">3</li>
+                          <li class="select_option">4</li>
+                          <li class="select_option">5</li>
+                          <li class="select_option">6</li>
+                          <li class="select_option">7</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- [추가] 20210819 삭제버튼추가-->
+                    <button type="button" class="ml2">
+                      <i class="ico_del_small">삭제</i>
+                    </button>
+                    <!-- //[추가] 20210819 삭제버튼추가-->
+                  </div>
+                </div>
+                <div class="inputList_wrap">
+                  <p class="input_label"></p>
+                  <div class="inputWrap">
+                    <button type="button" class="btn_text"><i class="icoplus_green01"></i>의료장비 추가</button><!--//[수정]20210819 텍스트 수정-->
                   </div>
                 </div>
               </li>
@@ -140,7 +180,7 @@
                   <p class="input_label">병원소개</p>
                   <div class="inputWrap">
                     <p class="textarea ">
-                      <textarea></textarea>
+                      <textarea>분자진단을 통해 병의 원인을 정확하게 진단할 수 있고 의사에게 생활 건강 코칭을 받을 수 있는 씨젠 임직원들을 위한 라이프 케어 부속의원 입니다.</textarea>
                     </p>
                   </div>
                 </div>
@@ -203,14 +243,6 @@
                         </button>
                       </div>
                     </li>
-                    <li>
-                      <div  class="chips_input">
-                        <span>input chip</span>
-                        <button type="button" class="btn_ico">
-                          <i class="ico_del_small">삭제</i>
-                        </button>
-                      </div>
-                    </li>
                   </ul>
                 </div>
               </li>
@@ -219,17 +251,28 @@
                   <p class="input_label">병원 사진</p>
                   <div class="hos_pic">
                     <div class="drop_imgBox">
-                      <input type="file" id="hos_img">
-                      <label for="hos_img">
+                      <!-- //input file 태그사용할경우.
+                        <input type="file" id="hos_img">
+                        <label for="hos_img">
+                          <p class="cont_txt02 color2">
+                            사진을 드래그하여 등록하세요
+                          </p>
+                        </label>
+                      -->
+                      <div for="hos_img">
                         <p class="cont_txt02 color2">
-                          Drop your images here, or<br>
-                          select <span>click to browse</span>
+                          사진을 드래그하여 등록하세요<!--//[수정]20210819 텍스트 수정-->
                         </p>
-                      </label>
+                      </div>
                     </div>
                     <ul class="img_list">
                       <li>
-<!--                        <img src="../../assets/ko/images/_temp/hospital_temp01.png" alt="병원이미지">-->
+                        <img src="../../assets/ko/images/_temp/hospital_temp01.png" alt="병원이미지">
+                        <!-- [추가] 20210819 삭제버튼추가-->
+                        <button type="button" class="img_del">
+                          <i class="ico_del_small">삭제</i>
+                        </button>
+                        <!-- //[추가] 20210819 삭제버튼추가-->
                       </li>
                       <li></li>
                       <li></li>
@@ -251,18 +294,18 @@
         </div>
         <div class="box_tr">
           <div class="box_td border_box">
-            <ul class="hosInput_list">
+            <ul class="hosInput_list hosInfo_time"> <!-- //[추가] 20210819 class="hosInfo_time" 추가-->
               <li>
                 <div class="inputList_wrap">
-                  <p class="input_label">Monday</p>
+                  <p class="input_label">월요일</p><!--//[수정]20210819 텍스트 수정-->
                   <div class="hosInput_time">
                     <div class="time_select">
-                      <p class="cont_txt01 color2">Start</p>
+                      <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>AM</span>
-                            <span>10 : 00</span>
+                            <span>08 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -299,12 +342,12 @@
                     </div>
                     <span class="time_bar"></span>
                     <div class="time_select">
-                      <p class="cont_txt01 color2">End</p>
+                      <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>PM</span>
-                            <span>19 : 00</span>
+                            <span>17 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -345,15 +388,15 @@
               <!---->
               <li>
                 <div class="inputList_wrap">
-                  <p class="input_label">Tuesday</p>
+                  <p class="input_label">화요일</p><!--//[수정]20210819 텍스트 수정-->
                   <div class="hosInput_time">
                     <div class="time_select">
-                      <p class="cont_txt01 color2">Start</p>
+                      <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>AM</span>
-                            <span>10 : 00</span>
+                            <span>08 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -390,12 +433,12 @@
                     </div>
                     <span class="time_bar"></span>
                     <div class="time_select">
-                      <p class="cont_txt01 color2">End</p>
+                      <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>PM</span>
-                            <span>19 : 00</span>
+                            <span>17 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -436,15 +479,15 @@
               <!---->
               <li>
                 <div class="inputList_wrap">
-                  <p class="input_label">wednesday</p>
+                  <p class="input_label">수요일</p><!--//[수정]20210819 텍스트 수정-->
                   <div class="hosInput_time">
                     <div class="time_select">
-                      <p class="cont_txt01 color2">Start</p>
+                      <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>AM</span>
-                            <span>10 : 00</span>
+                            <span>08 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -481,12 +524,12 @@
                     </div>
                     <span class="time_bar"></span>
                     <div class="time_select">
-                      <p class="cont_txt01 color2">End</p>
+                      <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>PM</span>
-                            <span>19 : 00</span>
+                            <span>17 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -527,15 +570,15 @@
               <!---->
               <li>
                 <div class="inputList_wrap">
-                  <p class="input_label">thursday</p>
+                  <p class="input_label">목요일</p><!--//[수정]20210819 텍스트 수정-->
                   <div class="hosInput_time">
                     <div class="time_select">
-                      <p class="cont_txt01 color2">Start</p>
+                      <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>AM</span>
-                            <span>10 : 00</span>
+                            <span>08 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -572,12 +615,12 @@
                     </div>
                     <span class="time_bar"></span>
                     <div class="time_select">
-                      <p class="cont_txt01 color2">End</p>
+                      <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>PM</span>
-                            <span>19 : 00</span>
+                            <span>17 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -618,15 +661,15 @@
               <!---->
               <li>
                 <div class="inputList_wrap">
-                  <p class="input_label">friday</p>
+                  <p class="input_label">금요일</p><!--//[수정]20210819 텍스트 수정-->
                   <div class="hosInput_time">
                     <div class="time_select">
-                      <p class="cont_txt01 color2">Start</p>
+                      <p class="cont_txt01 color2">시작</p>
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>AM</span>
-                            <span>10 : 00</span>
+                            <span>08 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -663,12 +706,12 @@
                     </div>
                     <span class="time_bar"></span>
                     <div class="time_select">
-                      <p class="cont_txt01 color2">End</p>
+                      <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                       <div class="select typeA ">
                         <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                           <button type="button" class="select_title ">
                             <span>PM</span>
-                            <span>19 : 00</span>
+                            <span>17 : 30</span>
                           </button>
                           <ul class="select_options">
                             <li class="select_option">
@@ -714,10 +757,10 @@
               <ul class="hosInput_list">
                 <li>
                   <div class="inputList_wrap">
-                    <p class="input_label">saturday</p>
+                    <p class="input_label color4">토요일</p><!--//[수정]20210819 텍스트 수정 + 클래스 추가-->
                     <div class="hosInput_time">
                       <div class="time_select">
-                        <p class="cont_txt01 color2">Start</p>
+                        <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                         <div class="select typeA ">
                           <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                             <button type="button" class="select_title ">
@@ -759,7 +802,7 @@
                       </div>
                       <span class="time_bar"></span>
                       <div class="time_select">
-                        <p class="cont_txt01 color2">End</p>
+                        <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                         <div class="select typeA ">
                           <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                             <button type="button" class="select_title ">
@@ -805,10 +848,10 @@
                 <!---->
                 <li>
                   <div class="inputList_wrap">
-                    <p class="input_label">sunday &amp; holiday</p>
+                    <p class="input_label color4">일요일 &amp; 공휴일</p><!--//[수정]20210819 텍스트 수정 + 클래스 추가-->
                     <div class="hosInput_time">
                       <div class="time_select">
-                        <p class="cont_txt01 color2">Start</p>
+                        <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                         <div class="select typeA ">
                           <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                             <button type="button" class="select_title ">
@@ -848,7 +891,7 @@
                       </div>
                       <span class="time_bar"></span>
                       <div class="time_select">
-                        <p class="cont_txt01 color2">End</p>
+                        <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                         <div class="select typeA ">
                           <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                             <button type="button" class="select_title ">
@@ -896,15 +939,15 @@
               <ul class="hosInput_list">
                 <li>
                   <div class="inputList_wrap">
-                    <p class="input_label">Lunch time</p>
+                    <p class="input_label">점심시간</p><!--//[수정]20210819 텍스트 수정-->
                     <div class="hosInput_time">
                       <div class="time_select">
-                        <p class="cont_txt01 color2">Start</p>
+                        <p class="cont_txt01 color2">시작</p><!--//[수정]20210819 텍스트 수정-->
                         <div class="select typeA ">
                           <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                             <button type="button" class="select_title ">
                               <span>PM</span>
-                              <span>13 : 00</span>
+                              <span>11 : 30</span>
                             </button>
                             <ul class="select_options">
                               <li class="select_option">
@@ -941,12 +984,12 @@
                       </div>
                       <span class="time_bar"></span>
                       <div class="time_select">
-                        <p class="cont_txt01 color2">End</p>
+                        <p class="cont_txt01 color2">종료</p><!--//[수정]20210819 텍스트 수정-->
                         <div class="select typeA ">
                           <div class="selectbox "><!-- on 클래스 추가시 .select_options display:block-->
                             <button type="button" class="select_title ">
                               <span>PM</span>
-                              <span>19 : 00</span>
+                              <span>12 : 30</span>
                             </button>
                             <ul class="select_options">
                               <li class="select_option">
@@ -1013,11 +1056,15 @@
                 <div class="inputList_wrap">
                   <p class="input_label">프로필 사진</p>
                   <div class="profile_picture">
-                    <input type="file" id="profile">
-                    <label for="profile" class="profile_img">
+                    <!--[수정]20210819 input="file" => 이미지박스 + 삭제버튼 아이콘 으로 변경-->
+                    <p class="profile_img">
                       <img src="../../assets/ko/images/_temp/thumb02.png" alt="이미지">
-                    </label>
-                    <p>Add a photo to personalize your account</p>
+                    </p>
+                    <button type="button" class="img_del">
+                      <i class="ico_del_small">삭제</i>
+                    </button>
+                    <!--//[수정]20210819 input="file" => 이미지박스 + 삭제버튼 아이콘 으로 변경-->
+                    <!-- <p>사진을 추가해주세요.</p> -->
                   </div>
                 </div>
               </li>
@@ -1025,7 +1072,7 @@
                 <div class="inputList_wrap">
                   <p class="input_label">이름</p>
                   <div class="input ">
-                    <input type="text" value="홍길동 원장님">
+                    <input type="text" value="김종석">
                   </div>
                 </div>
               </li>
@@ -1057,11 +1104,15 @@
                 <div class="inputList_wrap">
                   <p class="input_label">프로필 사진</p>
                   <div class="profile_picture">
-                    <input type="file" id="profile">
-                    <label for="profile" class="profile_img">
+                    <!--[수정]20210819 input="file" => 이미지박스 + 삭제버튼 아이콘 으로 변경-->
+                    <p class="profile_img">
                       <img src="../../assets/ko/images/_temp/thumb03.png" alt="이미지">
-                    </label>
-                    <p>Add a photo to personalize your account</p>
+                    </p>
+                    <button type="button" class="img_del">
+                      <i class="ico_del_small">삭제</i>
+                    </button>
+                    <!--//[수정]20210819 input="file" => 이미지박스 + 삭제버튼 아이콘 으로 변경-->
+                    <!-- <p>사진을 추가해주세요.</p> -->
                   </div>
                 </div>
               </li>
@@ -1069,7 +1120,7 @@
                 <div class="inputList_wrap">
                   <p class="input_label">이름</p>
                   <div class="input ">
-                    <input type="text" value="홍길동 원장님">
+                    <input type="text" value="나윤채">
                   </div>
                 </div>
               </li>
@@ -1105,7 +1156,7 @@
                     <label for="profile" class="profile_img">
                       <!-- <img src="../../assets/ko/images/_temp/thumb02.png" alt="이미지">  -->
                     </label>
-                    <p>Add a photo to personalize your account</p>
+                    <p>사진을 추가해주세요.</p>
                   </div>
                 </div>
               </li>
@@ -1135,8 +1186,8 @@
 
       <!-- btnWrapA -->
       <div class="btnWrapA">
-        <button type="button" class="btn_fill_cancel">cancel</button>
-        <button type="button" class="btn_fill">Confirm</button>
+        <button type="button" class="btn_fill_cancel">취소</button><!--//[수정]20210819 텍스트 수정-->
+        <button type="button" class="btn_fill">저장</button><!--//[수정]20210819 텍스트 수정-->
       </div>
       <!-- //btnWrapA -->
 

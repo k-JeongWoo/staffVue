@@ -2,7 +2,7 @@
   <div class="innerWrap patient_info_checkup02">
     <div class="top_wrap">
       <h2 class="headline05 fl">
-        <a href="javascript:void(0)" @click="$router.go(-1)"><i class="ico_backKey"></i>환자  상세 정보</a>
+        <i class="ico_backKey"></i>환자 상세 정보
       </h2>
       <!--bxSrchArea //bxSrchArea-->
     </div>
@@ -30,23 +30,20 @@
                     <span class="tit">연락처</span>
                     <span class="cont">{{phoneFomatter(memberInfo.memberHpno)}}</span>
                   </li>
-                  <li>
+<!--                  <li>
                     <p class="tit">키 / 몸무게</p>
                     <p class="cont">170 cm / 65 kg</p>
                   </li>
                   <li class="w100">
                     <span class="tit">가족력</span>
                     <span class="cont">가족력 텍스트 영역입니다.</span>
-                  </li>
+                  </li>-->
                 </ul>
               </dd>
             </dl>
             <div class="acco_box caution">
               <div class="acco_tit on"> <!-- class="on" 추가시 .acco_box display:block 처리 -->
                 <p>주의사항</p>
-                <button type="button" class="btn_ico acco_btn">
-                  <i class="icoarrows_down02">열기</i>
-                </button>
               </div>
               <div class="acco_cont">
                 <p>{{memberInfo.patientDesc}}</p>
@@ -55,16 +52,6 @@
           </div>
           <!--//detail_info-->
 
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
-          <div class="btnWrapB">
-            <button type="button" class="btn_ico">
-              <i class="ico_message">메세지</i>
-            </button>
-            <button type="button" class="btn_ico">
-              <i class="ico_del_gray01">삭제</i>
-            </button>
-          </div>
-          <!--btnWrapB 하단 메세지 ,삭제버튼 -->
         </div>
       </div>
       <!-- //contents중 왼쪽 좁은영역 -->
@@ -122,9 +109,9 @@
                       </colgroup>
                       <thead>
                       <tr>
-                        <th style="width:104px"><div class="th-text tac">No.<button type="button" class="btn_ico"><i class="icoarrows_down04"></i></button></div></th>
+                        <th style="width:104px"><div class="th-text tac">No.</div></th>
                         <th style="width:358px"><div class="th-text">병.의원(약국)명</div></th>
-                        <th style="width:144px"><div class="th-text">진료게시일<button type="button" class="btn_ico"><i class="icoarrows_up04"></i></button></div></th>
+                        <th style="width:144px"><div class="th-text">진료게시일</div></th>
                         <th style="width:106px"><div class="th-text">진료 형태</div></th>
                         <th style="width:139px"><div class="th-text tac">방문일수</div></th>
                         <th style="width:139px"><div class="th-text tac">처방횟수</div></th>
@@ -136,11 +123,14 @@
 <!--                        class="on"-->
                         <td class="tac">{{(index+1)}}</td>
                         <td>{{item.medicalPlace}}</td>
-                        <td>{{item.clinicStartDate}}</td>
+                        <td>{{dateFomatter(item.clinicStartDate)}}</td>
                         <td>{{item.medicalForm}}</td>
                         <td class="tac">{{item.medicalCareCnt}}</td>
                         <td class="tac">{{item.treatCnt}}</td>
                         <td class="tac">{{item.visitCnt}}</td>
+                      </tr>
+                      <tr v-if="blankType === 'A'">
+                        <td colspan="7" style="text-align: center;">데이터 동의를 받지 않았습니다.</td>
                       </tr>
                       </tbody>
                     </table>
@@ -170,6 +160,11 @@
           <div class="popup_body">
             <div class="table_list">
               <table class="">
+                <colgroup>
+                  <col>
+                  <col style="width: 170px;">
+                  <col style="width: 80px;">
+                </colgroup>
                 <thead>
                 <tr>
                   <th>처방약품명</th>
@@ -209,7 +204,8 @@ export default {
       memberInfo: null,
       medicineList: null,
       medicineDetail: null,
-      mediDetailModalFlag: false
+      mediDetailModalFlag: false,
+      blankType: null
     }
   },
   mounted: function () {
@@ -226,7 +222,11 @@ export default {
       }
       var res = axios.get(`/api/v1/api/member/memberDetail`, { params: params })
       res.then(response => {
-        this.memberInfo = response.data.data
+        if (response.data.resultCode === '0000') {
+          this.memberInfo = response.data.data
+        } else {
+          alert(response.data.message)
+        }
       }).catch(function (error) { console.log(error) })
     },
     getMedicineList: function () {
@@ -235,8 +235,12 @@ export default {
       }
       var res = axios.get(`/api/v1/api/medicine/medicineList`, { params: params })
       res.then(response => {
-        console.log(response)
-        this.medicineList = response.data.data
+        if (response.data.status === 9999) {
+          this.blankType = 'A'
+          alert(response.data.message)
+        } else {
+          this.medicineList = response.data.data
+        }
       }).catch(function (error) { console.log(error) })
     },
     mediDetailModalToggle: function () {
