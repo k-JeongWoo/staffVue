@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="wrap">
     <router-view name="asid"></router-view>
-    <router-view name="default"></router-view>
+    <router-view name="default" :key="$route.fullPath"></router-view>
   </div>
 </template>
 

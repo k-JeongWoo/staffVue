@@ -7,19 +7,19 @@
       </h1>
       <ul class="menu_list">
         <li class="menu_itme"><!--  on 클래스 추가시 메뉴 active 효과 -->
-          <router-link :to="{ path: '/mainhome' }"><i class="ico_consult_request"></i></router-link>
+          <router-link :to="{ path: '/mainhome' }" @click.native="currentPageReset('/mainhome')"><i class="ico_consult_request"></i></router-link>
           <div class="menu_box">
             <p class="largeMenu">
-              <router-link :to="{ path: '/mainhome' }" class="menu_name">상담 요청 리스트</router-link>
+              <router-link :to="{ path: '/mainhome' }" class="menu_name" @click.native="currentPageReset('/mainhome')">상담 요청 리스트</router-link>
             </p>
           </div>
         </li>
         <li class="menu_itme">
           <i class="ico_patient_list"></i>
-          <router-link :to="{ path: '/member/memberList' }"><i class="ico_patient_list"></i></router-link>
+          <router-link :to="{ path: '/member/memberList' }" @click.native="currentPageReset('/member/memberList')"><i class="ico_patient_list"></i></router-link>
           <div class="menu_box">
             <p class="largeMenu">
-              <router-link :to="{ path: '/member/memberList' }" class="menu_name">환자 리스트</router-link>
+              <router-link :to="{ path: '/member/memberList' }" class="menu_name" @click.native="currentPageReset('/member/memberList')">환자 리스트</router-link>
             </p>
           </div>
         </li>
@@ -27,7 +27,7 @@
           <i class="ico_hospital_info"></i>
           <div class="menu_box">
             <p class="largeMenu">
-              <router-link :to="{ path: '/hospital/hospitalHome' }" class="menu_name">병원 정보 관리</router-link>
+              <router-link :to="{ path: '/hospital/hospitalHome' }" class="menu_name" @click.native="currentPageReset('/hospital/hospitalHome')">병원 정보 관리</router-link>
             </p>
           </div>
         </li>
@@ -68,11 +68,22 @@ export default {
     return {
       userInfo: {
         emplyName: '',
-        emplyImage: ''
-      }
+        emplyImage: '',
+        pageReload: 0
+      },
+      preUrl: '',
+      pageIndex: 1
     }
   },
   methods: {
+    currentPageReset (pageUrl) {
+      if (this.preUrl === this.$route.path) {
+        this.$router.push(pageUrl + '?' + this.pageIndex++)
+      } else {
+        this.$router.push(pageUrl + '?' + 0)
+      }
+      this.preUrl = this.$route.path
+    },
     getUserInfo: function () {
       var res = axios.get(`/api/v1/api/emplystaff/emplystaffInfo`)
       res.then(response => {

@@ -173,10 +173,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item, index) in medicineDetail.medicineDetailList">
+                <tr v-for="item in medicineDetail.medicineDetailList">
                   <td>{{item.medicineName}} </td>
                   <td>{{item.medicineEffect}}</td>
-                  <td>{{item.medicineTreatCnt}}</td>
+                  <td>{{item.medicineUseCnt}}</td>
                 </tr>
                 </tbody>
               </table>

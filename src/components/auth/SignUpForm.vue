@@ -374,10 +374,12 @@
           <ul>
             <li class="inputList_wrap">
               <p class="input_label required">아이디</p><!-- "required" 클래스 입력시 필수입력 빨간 * 처리 -->
-              <div class="input">
-                <input type="text" v-model="usr_id" placeholder="sample@email.com" value="홍길동" v-on:change="emailChkFlag = false">
+              <div class="inputWrap">
+                <div class="input">
+                  <input type="text" v-model="usr_id" placeholder="sample@email.com" value="홍길동" v-on:change="emailChkFlag = false">
+                </div>
+                <button v-on:click="usrIdCheck" class="btn_border">중복확인</button>
               </div>
-              <button v-on:click="usrIdCheck" class="btn_border"n>중복확인</button>
             </li>
             <li class="inputList_wrap">
               <p class="input_label required">비밀번호</p>
@@ -404,7 +406,7 @@
                 <p class="input ">
                   <input type="text" v-model="usr_telnum" maxlength="11">
                 </p>
-                <button v-on:click="nicePopUp" class="btn_border">Verify</button>
+<!--                <button v-on:click="nicePopUp" class="btn_border">Verify</button>-->
               </div>
             </li>
             <li>
@@ -509,7 +511,7 @@
         </div>
       </section>
       <div class="btnWrapA mt7">
-        <a href="javascript:void(0);" class="btn_fill big" @click="regUsrInfo">Sign up</a>
+        <a href="javascript:void(0);" class="btn_fill big" @click="regUsrInfo">가입완료</a>
       </div>
     </div>
   </div>
@@ -728,6 +730,5 @@ function validateEmail (emailTxt) {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.contents {margin-left: 20px; margin-top: 15px;}
 li {margin-bottom: 20px;}
 </style>

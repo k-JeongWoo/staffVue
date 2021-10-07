@@ -121,12 +121,12 @@
               <button type="button" class="btn_page">
                 <i class="icopage_first">첫 페이지</i>
               </button>
-              <button type="button" class="btn_page" v-if="pageInfo.pageNo != 1" @click="pageInfo.pageNo--; movePage(pageInfo.pageNo--)">
+              <button type="button" class="btn_page" v-if="pageInfo.pageNo !== 1" @click="pageInfo.pageNo--; movePage(pageInfo.pageNo--)">
                 <i class="icopage_prev">이전</i>
               </button>
 
-              <a href="javascript:;"
-                 class="btn_page" :class="(pageNumber == (pageInfo.pageNo))? 'on' : ''"
+              <a href="javascript:void(0);"
+                 class="btn_page" :class="(pageNumber === (pageInfo.pageNo))? 'on' : ''"
                  v-for="pageNumber in pageInfo.pages.slice(pageInfo.pageNo-1, pageInfo.pageNo+2)"
                  @click="movePage(pageNumber)">
                 {{pageNumber}}
@@ -242,11 +242,11 @@
                     </div>
                     <span class="hyphen">-</span>
                     <div class="input" :class="{error: checkHpno}"><!--  error -->
-                      <input type="input" maxlength="4" v-model="midHpno" placeholder="">
+                      <input type="text" maxlength="4" v-model="midHpno" placeholder="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                     </div>
                     <span class="hyphen">-</span>
                     <div class="input " :class="{error: checkHpno}">
-                      <input type="input" maxlength="4" v-model="lastHpno" placeholder="">
+                      <input type="text" maxlength="4" v-model="lastHpno" placeholder="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                     </div>
                   </div>
                   <!--helper_text //  inputWrap 영역 하단에 에러메세지 필요한경우.-->
@@ -372,6 +372,8 @@ export default {
       this.memberWriteModalFlag = !this.memberWriteModalFlag
     },
     memberWriteFormReset: function () {
+      this.midHpno = ''
+      this.lastHpno = ''
       this.memberWriteForm = {
         selYear: dayjs().year(),
         selMonth: '01',

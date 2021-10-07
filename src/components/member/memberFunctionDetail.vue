@@ -141,7 +141,7 @@
 
             <div class="in_col grow01" v-if="functionCheckupList.responseData.length !== 0">
               <ul class="list_barGraph scrollArea">
-                <li class="item" v-for="(item, index) in functionCheckupList.responseData">
+                <li class="item" v-for="(item) in functionCheckupList.responseData">
                   <div class="item_cont">
                     <div class="info">
                       <h4 class="headline07">{{careProgramItem[item.checkupDetailItem]}}</h4>
@@ -378,7 +378,7 @@ export default {
 
           let obj = this
           let subItem = []
-          this.functionCheckupList.responseData.forEach(function (item, idx) {
+          this.functionCheckupList.responseData.forEach(function (item) {
             // this.normalValueA[item.checkupDetailItem] = item.normalValueA
 
             if (item.checkupDetailItem === 'SIG' || item.checkupDetailItem === 'TBP') {
@@ -404,7 +404,7 @@ export default {
             } else if (item.checkupDetailItem === 'HEA' || item.checkupDetailItem === 'PRO' || item.checkupDetailItem === 'TUB') {
               var itemsYear = ''
               var itemsResult = ''
-              item.checkupInspectionItems.forEach(function (item2, idx) {
+              item.checkupInspectionItems.forEach(function (item2) {
                 itemsYear += '<td>' + item2.pdCheckupYear + '</td>'
                 let resStyle = ''
                 if (item2.checkupDetailResult === '정상' || item2.checkupDetailResult === '음성' || item2.checkupDetailResult === '정상/정상') {
@@ -519,10 +519,10 @@ export default {
       var res = axios.post(`/api/v1/api/checkupDetail/functionItemMemberDelete`, params)
       res.then(response => {
         if (response.data.resultCode === '0000') {
-          alert('삭제가 완료되었습니다.')
+          alert('숨김처리 되었습니다.')
           this.getFunctionCheckupList(this.functionCheckupList.careProgramId)
         } else {
-          alert('삭제를 실패하었습니다.')
+          alert('숨김처리가 실패하었습니다.')
         }
       }).catch(function (error) { console.log(error) })
     }
@@ -581,7 +581,7 @@ function fnDrawChart (item, type) {
       'dataProvider': item.checkupInspectionItems
     }
   )
-  // eslint-disable-next-line no-undef,no-unused-expressions
+  // eslint-disable-next-line no-undef,no-unused-expressionsㅈ
   AmCharts.addInitHandler(function (chart) {
     chart.dataProvider.forEach(function (item, idx) {
       item['color'] = idx % 2 === 0 ? '#AF89FF' : '#9792FF'

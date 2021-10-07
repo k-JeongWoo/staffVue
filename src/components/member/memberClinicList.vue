@@ -213,12 +213,12 @@
                     <button type="button" class="btn_page">
                       <i class="icopage_first">첫 페이지</i>
                     </button>
-                    <button type="button" class="btn_page" v-if="pageInfo.pageNo != 1" @click="pageInfo.pageNo--; movePage(pageInfo.pageNo--)">
+                    <button type="button" class="btn_page" v-if="pageInfo.pageNo !== 1" @click="pageInfo.pageNo--; movePage(pageInfo.pageNo--)">
                       <i class="icopage_prev">이전</i>
                     </button>
 
-                    <a href="javascript:;"
-                       class="btn_page" :class="(pageNumber == (pageInfo.pageNo))? 'on' : ''"
+                    <a href="javascript:void(0);"
+                       class="btn_page" :class="(pageNumber === (pageInfo.pageNo))? 'on' : ''"
                        v-for="pageNumber in pageInfo.pages.slice(pageInfo.pageNo-1, pageInfo.pageNo+2)"
                        @click="movePage(pageNumber)">
                       {{pageNumber}}
@@ -308,7 +308,7 @@
                       </button>
                       <ul class="select_options">
                         <li class="select_option" v-for="item in timePickerSetArr"
-                            :class="{on : planModal.selectTime == item}"
+                            :class="{on : planModal.selectTime === item}"
                             v-on:click="planModal.selectTime = item">
                           {{item}}
                         </li>
@@ -368,7 +368,7 @@
                 <p class="input_label ">관리 계획</p>
                 <div class="inputWrap">
                   <div class="input w02">
-                    <input type="text" v-model="clinicModal.clinicStepMission" placeholder="10,000" value="">
+                    <input type="text" v-model="clinicModal.clinicStepMission" placeholder="10,000" value="" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                   </div>
                   <span class="text">걸음</span>
                 </div>
@@ -448,6 +448,7 @@ export default {
       },
       clinicModal: {
         clinicType: 'T',
+        clinicId: '',
         clinicStepMission: '',
         clinicCoaching: '',
         clinicRecord: '',
@@ -456,6 +457,7 @@ export default {
       },
       clinicModModal: {
         clinicType: 'T',
+        clinicId: '',
         clinicStepMission: '',
         clinicCoaching: '',
         clinicRecord: '',
@@ -622,7 +624,6 @@ export default {
         }
         var res = axios.post(`/api/v1/api/hospital/magementPlanDelete`, param)
         res.then(response => {
-          console.log(response)
           if (response.data.resultCode === '0000') {
             alert('삭제가 완료되었습니다.')
             this.getMagementPlanList()
@@ -659,7 +660,9 @@ export default {
       }).catch(function (error) { console.log(error) })
     },
     writeClinicPlan: function () {
-      if (this.clinicModal.clinicRecord.trim() === '') {
+      if (this.clinicModal.clinicStepMission.trim() === '') {
+        alert('관리 계획 (걸음수)을 입력해 주세요.')
+      } else if (this.clinicModal.clinicRecord.trim() === '') {
         alert('진료기록을 입력해 주세요.')
       } else {
         if (confirm('진료기록을 추가 하시겠습니까?')) {
@@ -690,6 +693,10 @@ export default {
         this.clinicModal.clinicType = 'D'
       }
       this.clinicModal.clinicNextvisit = this.clinicModModal.clinicNextvisit
+      this.clinicModal.clinicCoaching = this.clinicModModal.clinicCoaching
+      this.clinicModal.clinicRecord = this.clinicModModal.clinicRecord
+      this.clinicModal.clinicCaution = this.clinicModModal.clinicCaution
+      this.clinicModal.clinicId = this.clinicModModal.clinicId
       this.clinicModalToggle()
     },
     modifyClinic: function () {

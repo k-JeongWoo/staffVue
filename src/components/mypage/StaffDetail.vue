@@ -333,6 +333,7 @@ export default {
       this.preview(this.filename)
     },
     preview (file) {
+      console.log('ㅡㅡㅡㅡㅡㅡㅡㅡㅡ file preview ㅡㅡㅡㅡㅡㅡㅡㅡㅡ')
       if (typeof file === 'string') {
         this.imageSrc = file
       } else {
