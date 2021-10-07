@@ -42,7 +42,7 @@
           <!--//bxSrchArea-->
 
           <ul class="list_type01 mt4 scrollArea" ref="inqList">
-            <li v-for="(item, index) in inquiryList" v-on:click="getInquiryDetail(item.medicalInquiryId)"
+            <li v-for="item in inquiryList" v-on:click="getInquiryDetail(item.medicalInquiryId)"
                 :class="{on : medicalInquiryId === item.medicalInquiryId}"><!--선택된 선택효과 on클래스 추가 -->
               <div class="write_info">
                 <p class="name">{{item.memberName}}</p>
@@ -74,12 +74,12 @@
               <button type="button" class="btn_page">
                 <i class="icopage_first">첫 페이지</i>
               </button>
-              <button type="button" class="btn_page" v-if="pageInfo.pageNo != 1" @click="pageInfo.pageNo--; movePage(pageInfo.pageNo--)">
+              <button type="button" class="btn_page" v-if="pageInfo.pageNo !== 1" @click="pageInfo.pageNo--; movePage(pageInfo.pageNo--)">
                 <i class="icopage_prev">이전</i>
               </button>
 
-              <a href="javascript:;"
-                 class="btn_page" :class="(pageNumber == (pageInfo.pageNo))? 'on' : ''"
+              <a href="javascript:void(0);"
+                 class="btn_page" :class="(pageNumber === (pageInfo.pageNo))? 'on' : ''"
                  v-for="pageNumber in pageInfo.pages.slice(pageInfo.pageNo-1, pageInfo.pageNo+2)"
                  @click="movePage(pageNumber)">
                 {{pageNumber}}
