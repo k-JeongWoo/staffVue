@@ -23,7 +23,7 @@ export default {
       if (event.keyCode === 116 || (event.ctrlKey === true && event.keyCode === 82)) {
         console.log(1)
       } else {
-        axios.post(`/api/v1/api/auth/loginout`).then(res => { console.log(res) }).catch(function (error) { console.log(error) })
+        axios.post(`/api/v1/api/auth/loginout`).then().catch(function (error) { console.log(error) })
       }
       event.preventDefault() // If you prevent default behavior in Mozilla Firefox prompt will always be shown
       // Chrome requires returnValue to be set
